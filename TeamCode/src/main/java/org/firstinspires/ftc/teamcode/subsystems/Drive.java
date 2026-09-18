@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad1;
+
 import com.pedropathing.follower.Follower;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -20,12 +22,14 @@ public class Drive extends SubsystemBase {
         follower.update();
     }
 
+
+
     public Command manualDrive(Gamepad gamepad) {
         return run(
             () -> {
                 double forward = -gamepad.left_stick_y;
                 double lateral = gamepad.left_stick_x;
-                double turn = gamepad.right_stick_x;
+                double turn =   gamepad.right_trigger - gamepad.left_trigger;
 
                 follower.manual(forward, lateral, turn);
             }
