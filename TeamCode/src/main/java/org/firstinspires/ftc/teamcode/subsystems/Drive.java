@@ -28,8 +28,8 @@ public class Drive extends SubsystemBase {
         return run(
             () -> {
                 double forward = -gamepad.left_stick_y;
-                double lateral = gamepad.left_stick_x;
-                double turn =   gamepad.right_trigger - gamepad.left_trigger;
+                double lateral = -gamepad.left_stick_x;
+                double turn =   -gamepad.right_trigger + gamepad.left_trigger;
 
                 follower.manual(forward, lateral, turn);
             }

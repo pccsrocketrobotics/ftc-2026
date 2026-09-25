@@ -9,6 +9,7 @@ import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
 
 import org.firstinspires.ftc.teamcode.subsystems.Drive;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
+import org.firstinspires.ftc.teamcode.subsystems.Shooter;
 
 import java.util.function.BooleanSupplier;
 
@@ -19,9 +20,10 @@ public class DriverControl extends CommandOpMode {
         // 1. Create subsystems
         Drive drive = new Drive(hardwareMap);
         Intake intake = new Intake(hardwareMap);
+        Shooter shooter = new Shooter(hardwareMap);
 
         // 2. Register them so periodic() runs
-        register(drive, intake);
+        register(drive, intake,shooter);
 
         // 3. Wrap the gamepads
         GamepadEx operator = new GamepadEx(gamepad1);
@@ -33,6 +35,8 @@ public class DriverControl extends CommandOpMode {
         operator.getGamepadButton(GamepadKeys.Button.B).whenHeld(intake.outCommand());
         operator.getGamepadButton(GamepadKeys.Button.A).whenHeld(intake.inCommand());
         operator.getGamepadButton(GamepadKeys.Button.X).whenHeld(intake.stopCommand());
+
+        operator.getGamepadButton(GamepadKeys.Button.BACK).whenHeld(shooter.shootCommand());
 
         //        intake.setDefaultCommand(intake.inCommand());
 
