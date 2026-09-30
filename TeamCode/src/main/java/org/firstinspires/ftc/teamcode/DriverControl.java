@@ -1,12 +1,17 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.seattlesolvers.solverslib.command.CommandOpMode;
 import com.seattlesolvers.solverslib.command.StartEndCommand;
 import com.seattlesolvers.solverslib.command.button.Trigger;
 import com.seattlesolvers.solverslib.gamepad.GamepadEx;
 import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
+import com.pedropathing.drivetrain.DrivePowers;
+import com.pedropathing.follower.ManualDrive;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.subsystems.Drive;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.subsystems.Shooter;
@@ -17,10 +22,12 @@ import java.util.function.BooleanSupplier;
 public class DriverControl extends CommandOpMode {
     @Override
     public void initialize() {
+        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
+
         // 1. Create subsystems
         Drive drive = new Drive(hardwareMap);
         Intake intake = new Intake(hardwareMap);
-        Shooter shooter = new Shooter(hardwareMap);
+        Shooter shooter = new Shooter(hardwareMap, telemetry);
 
         // 2. Register them so periodic() runs
         register(drive, intake,shooter);
@@ -39,6 +46,11 @@ public class DriverControl extends CommandOpMode {
         operator.getGamepadButton(GamepadKeys.Button.BACK).whenHeld(shooter.shootCommand());
 
         //        intake.setDefaultCommand(intake.inCommand());
+    }
 
+    @Override
+    public void run() {
+        super.run();
+        telemetry.update();
     }
 }

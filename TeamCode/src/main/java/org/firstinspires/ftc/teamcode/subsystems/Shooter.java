@@ -13,22 +13,23 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 @Config
 public class Shooter extends SubsystemBase {
-    private DcMotorEx shooter;
+    private final DcMotorEx shooter;
     public static double TARGET_SPEED = 500;
     private double shooterSpeed;
 
-    private final Telemetry dashboard = FtcDashboard.getInstance().getTelemetry();
+    private final Telemetry telemetry;
 
-    public Shooter(HardwareMap hardwareMap) {
+
+    public Shooter(HardwareMap hardwareMap, Telemetry telemetry) {
         shooter = hardwareMap.get(DcMotorEx.class, "shooter");
         shooter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        this.telemetry = telemetry;
     }
 
     @Override
     public void periodic() {
-        dashboard.addData("Target speed", shooterSpeed);
-        dashboard.addData("Current speed", shooter.getVelocity());
-        dashboard.update();
+        telemetry.addData("Target speed", shooterSpeed);
+        telemetry.addData("Current speed", shooter.getVelocity());
     }
 
     public void shoot (double speed) {
