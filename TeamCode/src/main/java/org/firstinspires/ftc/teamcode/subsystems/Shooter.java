@@ -11,6 +11,8 @@ import com.seattlesolvers.solverslib.command.SubsystemBase;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
+import Ori.Coval.Logging.Logger.KoalaLog;
+
 @Config
 public class Shooter extends SubsystemBase {
     private final DcMotorEx shooter;
@@ -28,8 +30,13 @@ public class Shooter extends SubsystemBase {
 
     @Override
     public void periodic() {
-        telemetry.addData("Target speed", shooterSpeed);
-        telemetry.addData("Current speed", shooter.getVelocity());
+        double currentVelocity = shooter.getVelocity();
+        double targetVelocity = shooterSpeed;
+        telemetry.addData("Target speed", targetVelocity);
+        telemetry.addData("Current speed", currentVelocity);
+        KoalaLog.log("Current speed", currentVelocity, false);
+        KoalaLog.log("Target speed", targetVelocity, false);
+
     }
 
     public void shoot (double speed) {
