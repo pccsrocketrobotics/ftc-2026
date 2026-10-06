@@ -15,8 +15,11 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.subsystems.Drive;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.subsystems.Shooter;
+import org.firstinspires.ftc.teamcode.subsystems.Sweeper;
 
 import java.util.function.BooleanSupplier;
+
+import Ori.Coval.Logging.Logger.KoalaLog;
 
 @TeleOp
 public class DriverControl extends CommandOpMode {
@@ -24,13 +27,17 @@ public class DriverControl extends CommandOpMode {
     public void initialize() {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
+        KoalaLog.setup(hardwareMap);
+        KoalaLog.start();
+
         // 1. Create subsystems
         Drive drive = new Drive(hardwareMap);
         Intake intake = new Intake(hardwareMap);
         Shooter shooter = new Shooter(hardwareMap, telemetry);
+        Sweeper sweeper = new Sweeper(hardwareMap);
 
         // 2. Register them so periodic() runs
-        register(drive, intake,shooter);
+        register(drive, intake, shooter, sweeper);
 
         // 3. Wrap the gamepads
         GamepadEx operator = new GamepadEx(gamepad1);
@@ -42,6 +49,12 @@ public class DriverControl extends CommandOpMode {
         operator.getGamepadButton(GamepadKeys.Button.B).whenHeld(intake.outCommand());
         operator.getGamepadButton(GamepadKeys.Button.A).whenHeld(intake.inCommand());
         operator.getGamepadButton(GamepadKeys.Button.X).whenHeld(intake.stopCommand());
+
+        operator.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(sweeper.wristDownCommand());
+        operator.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(sweeper.wristUpCommand());
+        operator.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(sweeper.grabberSpinCommand());
+
+
 
         operator.getGamepadButton(GamepadKeys.Button.BACK).whenHeld(shooter.shootCommand());
 

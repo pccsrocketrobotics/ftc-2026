@@ -28,6 +28,7 @@ public class Shooter extends SubsystemBase {
         this.telemetry = telemetry;
     }
 
+
     @Override
     public void periodic() {
         double currentVelocity = shooter.getVelocity();
@@ -36,7 +37,6 @@ public class Shooter extends SubsystemBase {
         telemetry.addData("Current speed", currentVelocity);
         KoalaLog.log("Current speed", currentVelocity, false);
         KoalaLog.log("Target speed", targetVelocity, false);
-
     }
 
     public void shoot (double speed) {
