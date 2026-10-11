@@ -31,7 +31,7 @@ public class Drive extends SubsystemBase {
             () -> {
                 double forward = -cube(gamepad.left_stick_y);
                 double lateral = -cube(gamepad.left_stick_x);
-                double turn = -cube(gamepad.right_trigger + gamepad.left_trigger);
+                double turn = -cube(gamepad.right_trigger - gamepad.left_trigger);
                 DrivePowers powers = ManualDrive.fieldCentric(
                     forward,
                     lateral,

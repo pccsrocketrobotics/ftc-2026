@@ -16,6 +16,7 @@ import org.firstinspires.ftc.teamcode.subsystems.Drive;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.subsystems.Shooter;
 import org.firstinspires.ftc.teamcode.subsystems.Sweeper;
+import org.firstinspires.ftc.teamcode.subsystems.Transfer;
 
 import java.util.function.BooleanSupplier;
 
@@ -35,9 +36,10 @@ public class DriverControl extends CommandOpMode {
         Intake intake = new Intake(hardwareMap);
         Shooter shooter = new Shooter(hardwareMap, telemetry);
         Sweeper sweeper = new Sweeper(hardwareMap);
+        Transfer transfer = new Transfer(hardwareMap);
 
         // 2. Register them so periodic() runs
-        register(drive, intake, shooter, sweeper);
+        register(drive, intake, shooter, sweeper, transfer);
 
         // 3. Wrap the gamepads
         GamepadEx operator = new GamepadEx(gamepad1);
@@ -54,7 +56,9 @@ public class DriverControl extends CommandOpMode {
         operator.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(sweeper.wristUpCommand());
         operator.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(sweeper.grabberSpinCommand());
 
-
+        operator.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(transfer.inCommand());
+        operator.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(transfer.outCommand());
+        operator.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(transfer.stopCommand());
 
         operator.getGamepadButton(GamepadKeys.Button.BACK).whenHeld(shooter.shootCommand());
 
