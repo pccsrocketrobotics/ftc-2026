@@ -1,12 +1,14 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
 import com.pedropathing.follower.Follower;
+import com.pedropathing.paths.Path;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.seattlesolvers.solverslib.command.Command;
 import com.seattlesolvers.solverslib.command.SubsystemBase;
 import com.pedropathing.drivetrain.DrivePowers;
 import com.pedropathing.follower.ManualDrive;
+import com.seattlesolvers.solverslib.pedroCommand.FollowPathCommand;
 
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 
@@ -15,6 +17,10 @@ public class Drive extends SubsystemBase {
     private Follower follower;
     public Drive(HardwareMap hardwareMap) {
         follower = Constants.create(hardwareMap);
+    }
+
+    public Follower getFollower() {
+        return follower;
     }
 
     @Override
@@ -42,4 +48,9 @@ public class Drive extends SubsystemBase {
             }
         );
     }
+
+    public Command follow(Path path) {
+     return new FollowPathCommand(follower, path);
+    }
+
 }

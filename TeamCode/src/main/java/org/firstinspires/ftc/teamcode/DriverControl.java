@@ -23,28 +23,16 @@ import java.util.function.BooleanSupplier;
 import Ori.Coval.Logging.Logger.KoalaLog;
 
 @TeleOp
-public class DriverControl extends CommandOpMode {
+public class DriverControl extends CommonOpMode {
     @Override
     public void initialize() {
-        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
+        //setup subsystems
+        super.initialize();
 
-        KoalaLog.setup(hardwareMap);
-        KoalaLog.start();
-
-        // 1. Create subsystems
-        Drive drive = new Drive(hardwareMap);
-        Intake intake = new Intake(hardwareMap);
-        Shooter shooter = new Shooter(hardwareMap, telemetry);
-        Sweeper sweeper = new Sweeper(hardwareMap);
-        Transfer transfer = new Transfer(hardwareMap);
-
-        // 2. Register them so periodic() runs
-        register(drive, intake, shooter, sweeper, transfer);
-
-        // 3. Wrap the gamepads
+        // 1. Wrap the gamepads
         GamepadEx operator = new GamepadEx(gamepad1);
 
-        // 4. Bind buttons to commands
+        // 2. Bind buttons to commands
         drive.setDefaultCommand(
                 drive.manualDrive(gamepad1)
         );
@@ -65,9 +53,4 @@ public class DriverControl extends CommandOpMode {
         //        intake.setDefaultCommand(intake.inCommand());
     }
 
-    @Override
-    public void run() {
-        super.run();
-        telemetry.update();
-    }
 }
