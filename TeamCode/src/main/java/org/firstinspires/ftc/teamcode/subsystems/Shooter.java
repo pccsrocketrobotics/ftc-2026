@@ -31,9 +31,8 @@ public class Shooter extends SubsystemBase {
 
     @Override
     public void periodic() {
-        double currentVelocity = shooter.getVelocity();
-        KoalaLog.log("Current speed", currentVelocity, true);
-        KoalaLog.log("Target speed", shooterSpeed, true);
+        KoalaLog.log("Shooter/Speed", shooter.getVelocity(), true);
+        KoalaLog.log("Shooter/Target", shooterSpeed, true);
     }
 
     public void shoot (double speed) {

@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
 import com.pedropathing.follower.Follower;
+import com.pedropathing.math.Pose;
 import com.pedropathing.paths.Path;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -8,9 +9,14 @@ import com.seattlesolvers.solverslib.command.Command;
 import com.seattlesolvers.solverslib.command.SubsystemBase;
 import com.pedropathing.drivetrain.DrivePowers;
 import com.pedropathing.follower.ManualDrive;
+import com.seattlesolvers.solverslib.geometry.Pose2d;
+import com.seattlesolvers.solverslib.geometry.Pose2dExtKt;
 import com.seattlesolvers.solverslib.pedroCommand.FollowPathCommand;
 
+import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
+
+import Ori.Coval.Logging.Logger.KoalaLog;
 
 public class Drive extends SubsystemBase {
 
@@ -26,7 +32,10 @@ public class Drive extends SubsystemBase {
     @Override
     public void periodic() {
         follower.update();
+        KoalaLog.logPose2d("Drive/Pose", follower.pose().x(), follower.pose().y(), follower.pose().heading(), true);
+        KoalaLog.log("Drive/IsBusy", follower.isBusy(), true);
     }
+
 
 
     public double cube(double num) {

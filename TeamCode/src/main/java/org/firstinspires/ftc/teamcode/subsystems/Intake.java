@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.seattlesolvers.solverslib.command.Command;
 import com.seattlesolvers.solverslib.command.SubsystemBase;
 
+import Ori.Coval.Logging.Logger.KoalaLog;
+
 
 public class Intake extends SubsystemBase {
 
@@ -15,6 +17,10 @@ public class Intake extends SubsystemBase {
         intake = hardwareMap.get(DcMotorEx.class, "intake");
     }
 
+    public void periodic() {
+        KoalaLog.log("Intake/Power", intake.getPower(), true);
+        KoalaLog.log("Intake/Speed", intake.getVelocity(), true);
+    }
 
     public void spin(double power) {
     intakePower = power;
