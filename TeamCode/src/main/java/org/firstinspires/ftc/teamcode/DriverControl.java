@@ -30,27 +30,30 @@ public class DriverControl extends CommonOpMode {
         super.initialize();
 
         // 1. Wrap the gamepads
-        GamepadEx operator = new GamepadEx(gamepad1);
+        GamepadEx driver = new GamepadEx(gamepad1);
+        GamepadEx operater = new GamepadEx(gamepad2);
 
         // 2. Bind buttons to commands
+
+        //Driver
         drive.setDefaultCommand(
                 drive.manualDrive(gamepad1)
         );
-        operator.getGamepadButton(GamepadKeys.Button.B).whenHeld(intake.outCommand());
-        operator.getGamepadButton(GamepadKeys.Button.A).whenHeld(intake.inCommand());
-        operator.getGamepadButton(GamepadKeys.Button.X).whenHeld(intake.stopCommand());
+        driver.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(sweeper.wristDownCommand());
+        driver.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(sweeper.wristUpCommand());
+        driver.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(sweeper.grabberSpinCommand());
 
-        operator.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(sweeper.wristDownCommand());
-        operator.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(sweeper.wristUpCommand());
-        operator.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(sweeper.grabberSpinCommand());
 
-        operator.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(transfer.inCommand());
-        operator.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(transfer.outCommand());
-        operator.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(transfer.stopCommand());
+        //Operator
+        operater.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(intake.outCommand().alongWith(transfer.outCommand()));
+        operater.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(intake.inCommand().alongWith(transfer.inCommand()));
+        operater.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(intake.stopCommand().alongWith(transfer.stopCommand()));
+        operater.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(intake.stopCommand().alongWith(transfer.stopCommand()));
 
-        operator.getGamepadButton(GamepadKeys.Button.BACK).whenHeld(shooter.shootCommand());
-
-        //        intake.setDefaultCommand(intake.inCommand());
+        operater.getGamepadButton(GamepadKeys.Button.A).whenPressed(shooter.shootCommand(() -> Shooter.SPEED1));
+        operater.getGamepadButton(GamepadKeys.Button.B).whenPressed(shooter.shootCommand(() -> Shooter.SPEED2));
+        operater.getGamepadButton(GamepadKeys.Button.X).whenPressed(shooter.shootCommand(() -> Shooter.SPEED3));
+        operater.getGamepadButton(GamepadKeys.Button.Y).whenPressed(shooter.stopCommand());
     }
 
 }

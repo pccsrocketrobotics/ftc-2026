@@ -13,6 +13,10 @@ import com.seattlesolvers.solverslib.command.SequentialCommandGroup;
 import com.seattlesolvers.solverslib.command.WaitCommand;
 import com.seattlesolvers.solverslib.pedroCommand.FollowPathCommand;
 
+import org.firstinspires.ftc.teamcode.subsystems.Shooter;
+
+import java.util.function.DoubleSupplier;
+
 @Autonomous(preselectTeleOp = "DriverControl")
 public class HiveShootPark extends CommonOpMode{
 
@@ -32,8 +36,8 @@ public class HiveShootPark extends CommonOpMode{
         Follower follower = drive.getFollower();
         follower.setPose(startPose);
 
-        Path shoot = line(startPose, shootPose);
-        Path park = curve(shootPose, parkControlPose, parkPose);
+        Path shoot = line(startPose, shootPose).linear(startPose, shootPose);
+        Path park = curve(shootPose, parkControlPose, parkPose).linear(shootPose,parkPose);
 
         auton = new SequentialCommandGroup(
             new ParallelDeadlineGroup(
@@ -41,7 +45,7 @@ public class HiveShootPark extends CommonOpMode{
                     drive.follow(shoot),
                     new WaitCommand(4000)
                 ),
-                shooter.shootCommand()
+                shooter.shootCommand(() -> Shooter.SPEED2)
             ),
             drive.follow(park)
         );

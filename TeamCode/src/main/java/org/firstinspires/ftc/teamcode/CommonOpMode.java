@@ -34,13 +34,12 @@ public class CommonOpMode extends CommandOpMode {
     @Override
     public void initialize() {
         KoalaLog.setup(hardwareMap);
-        KoalaLog.start();
         setupBulkReading();
 
         // 1. Create subsystems
         drive = new Drive(hardwareMap);
         intake = new Intake(hardwareMap);
-        shooter = new Shooter(hardwareMap, telemetry);
+        shooter = new Shooter(hardwareMap);
         sweeper = new Sweeper(hardwareMap);
         transfer = new Transfer(hardwareMap);
 
@@ -52,6 +51,11 @@ public class CommonOpMode extends CommandOpMode {
     @Override
     public void initialize_loop() {
         clearBulkReading();
+    }
+
+    @Override
+    public void preRun() {
+        KoalaLog.start();
     }
 
     @Override
