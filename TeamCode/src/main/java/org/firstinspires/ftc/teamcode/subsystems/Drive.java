@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.subsystems;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.math.Pose;
 import com.pedropathing.paths.Path;
+import com.pedropathing.revhub.localizers.PinpointLocalizer;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.seattlesolvers.solverslib.command.Command;
@@ -32,7 +33,7 @@ public class Drive extends SubsystemBase {
     @Override
     public void periodic() {
         follower.update();
-        KoalaLog.logPose2d("Drive/Pose", follower.pose().x(), follower.pose().y(), follower.pose().heading(), true);
+        KoalaLog.logPose2d("Drive/Pose", follower.pose().x() * 39.37, follower.pose().y() * 39.37, follower.pose().heading(), true);
         KoalaLog.log("Drive/IsBusy", follower.isBusy(), true);
     }
 
@@ -53,9 +54,13 @@ public class Drive extends SubsystemBase {
                     turn,
                     follower.pose().heading()
                 );
-                follower.manual(forward, lateral, turn);
+                follower.manual(powers);
             }
         );
+    }
+
+    public void resetFieldCentric() {
+        follower.localizer.reset();
     }
 
     public Command follow(Path path) {

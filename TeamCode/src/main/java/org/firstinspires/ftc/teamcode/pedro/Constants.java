@@ -1,5 +1,8 @@
 package org.firstinspires.ftc.teamcode.pedro;
 
+import android.os.Build;
+import android.util.Log;
+
 import com.pedropathing.algorithm.Foresight;
 import com.pedropathing.algorithm.ForesightConfig;
 import com.pedropathing.controllers.Controller;
@@ -17,6 +20,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 public class Constants {
+
+    public static String PRACTICE_BOT_SERIAL = "a991cf9f16920959";
     public static MecanumConfig drivetrainConfig = new MecanumConfig
         (c -> {
             c.frontLeftName.set("lf");
@@ -38,6 +43,7 @@ public class Constants {
         c.yPodDirection.set(GoBildaPinpointDriver.EncoderDirection.FORWARD);
         c.globalDistanceUnit.set(DistanceUnit.INCH);
         c.offsetUnits.set(DistanceUnit.INCH);
+        c.resetMode.set(PinpointLocalizer.ResetMode.RESET_AND_RECALIBRATE_IMU);
     });
     public static ForesightConfig foresightConfig = new ForesightConfig(
             c -> {
@@ -70,5 +76,9 @@ public class Constants {
                 new Mecanum(h, drivetrainConfig),
                 new Foresight(foresightConfig)
         );
+    }
+    public static boolean isPracticeBot() {
+        Log.i("robotSerial", Build.SERIAL);
+        return Build.SERIAL.equals(PRACTICE_BOT_SERIAL);
     }
 }
