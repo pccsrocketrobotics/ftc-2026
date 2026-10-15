@@ -68,4 +68,9 @@ public class DriverControl extends CommonOpMode {
 
     }
 
+    @Override
+    public void preRun() {
+        super.preRun();
+        schedule(gate.gateCloseCommand());
+    }
 }

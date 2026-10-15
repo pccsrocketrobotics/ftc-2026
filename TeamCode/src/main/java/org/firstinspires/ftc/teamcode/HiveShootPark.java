@@ -42,8 +42,7 @@ public class HiveShootPark extends CommonOpMode{
         auton = new SequentialCommandGroup(
             new ParallelDeadlineGroup(
                 new SequentialCommandGroup(
-                    drive.follow(shoot),
-                    new WaitCommand(4000)
+                    drive.follow(shoot)
                 ),
                 shooter.shootCommand(() -> Shooter.SPEED2)
             ),
