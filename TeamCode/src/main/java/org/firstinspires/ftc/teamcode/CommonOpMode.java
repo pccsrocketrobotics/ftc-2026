@@ -11,6 +11,7 @@ import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.subsystems.Drive;
+import org.firstinspires.ftc.teamcode.subsystems.Gate;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.subsystems.Shooter;
 import org.firstinspires.ftc.teamcode.subsystems.Sweeper;
@@ -28,6 +29,7 @@ public class CommonOpMode extends CommandOpMode {
     protected Shooter shooter;
     protected Sweeper sweeper;
     protected Transfer transfer;
+    protected Gate gate;
 
     private List<LynxModule> allHubs;
 
@@ -42,9 +44,10 @@ public class CommonOpMode extends CommandOpMode {
         shooter = new Shooter(hardwareMap);
         sweeper = new Sweeper(hardwareMap);
         transfer = new Transfer(hardwareMap);
+        gate = new Gate(hardwareMap);
 
         // 2. Register them so periodic() runs
-        register(drive, intake, shooter, sweeper, transfer);
+        register(drive, intake, shooter, sweeper, transfer, gate);
 
     }
 
