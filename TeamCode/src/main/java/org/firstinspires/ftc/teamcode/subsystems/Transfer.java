@@ -24,14 +24,14 @@ public class Transfer extends SubsystemBase {
 
     public Command inCommand() {
         return startEnd(
-                () -> spin(1),
+                () -> spin(-1),
                 () -> spin(0)
         );
     }
 
     public Command outCommand() {
         return startEnd(
-                () -> spin(-1),
+                () -> spin(1),
                 () -> spin(0)
         );
     }

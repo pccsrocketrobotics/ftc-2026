@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.subsystems;
 import static com.seattlesolvers.solverslib.command.Commands.startEnd;
 import static com.seattlesolvers.solverslib.command.Commands.startRun;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -10,13 +11,14 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.seattlesolvers.solverslib.command.Command;
 import com.seattlesolvers.solverslib.command.SubsystemBase;
 
+@Config
 public class Sweeper extends SubsystemBase {
 
     private Servo wrist;
     private CRServo grabber;
 
     public static double WRIST_DOWN = 0;
-    public static double WRIST_UP = 180;
+    public static double WRIST_UP = 0.8;
     private double grabberPower;
 
     public Sweeper(HardwareMap hardwareMap) {
@@ -47,7 +49,7 @@ public class Sweeper extends SubsystemBase {
 
     public Command grabberSpinCommand() {
         return startEnd(
-            () -> grab(0.5),
+            () -> grab(-1),
             () -> grab(0)
         );
 }

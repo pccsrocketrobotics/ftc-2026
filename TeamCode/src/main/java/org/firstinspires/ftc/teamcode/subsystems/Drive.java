@@ -33,7 +33,7 @@ public class Drive extends SubsystemBase {
     @Override
     public void periodic() {
         follower.update();
-        KoalaLog.logPose2d("Drive/Pose", follower.pose().x() * 39.37, follower.pose().y() * 39.37, follower.pose().heading(), true);
+        KoalaLog.logPose2d("Drive/Pose", follower.pose().x() * .0254, follower.pose().y() * .0254, follower.pose().heading(), true);
         KoalaLog.log("Drive/IsBusy", follower.isBusy(), true);
     }
 

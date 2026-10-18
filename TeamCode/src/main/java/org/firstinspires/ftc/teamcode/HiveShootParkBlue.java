@@ -10,15 +10,13 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.seattlesolvers.solverslib.command.Command;
 import com.seattlesolvers.solverslib.command.ParallelDeadlineGroup;
 import com.seattlesolvers.solverslib.command.SequentialCommandGroup;
-import com.seattlesolvers.solverslib.command.WaitCommand;
-import com.seattlesolvers.solverslib.pedroCommand.FollowPathCommand;
 
 import org.firstinspires.ftc.teamcode.subsystems.Shooter;
 
-import java.util.function.DoubleSupplier;
+import Ori.Coval.Logging.Logger.KoalaLog;
 
 @Autonomous(preselectTeleOp = "DriverControl")
-public class HiveShootPark extends CommonOpMode{
+public class HiveShootParkBlue extends CommonOpMode{
 
     private Command auton;
 
@@ -29,9 +27,9 @@ public class HiveShootPark extends CommonOpMode{
         PoseFactory p = PoseFactory.degrees(); // add this
 
         Pose startPose = p.of(60,8,90);
-        Pose shootPose = p.of(60,32,90);
-        Pose parkPose = p.of(30,60,90);
-        Pose parkControlPose = p.of(45, 20, 90);
+        Pose shootPose = p.of(60,20,90);
+        Pose parkPose = p.of(12,90,90);
+        Pose parkControlPose = p.of(30, 20, 90);
 
         Follower follower = drive.getFollower();
         follower.setPose(startPose);
@@ -42,7 +40,10 @@ public class HiveShootPark extends CommonOpMode{
         auton = new SequentialCommandGroup(
             new ParallelDeadlineGroup(
                 new SequentialCommandGroup(
-                    drive.follow(shoot)
+                    drive.follow(shoot),
+                    gate.gateOpenCommand(),
+                    transfer.inCommand().withTimeout(2000),
+                    gate.gateCloseCommand()
                 ),
                 shooter.shootCommand(() -> Shooter.SPEED2)
             ),
@@ -52,5 +53,6 @@ public class HiveShootPark extends CommonOpMode{
     @Override
     public void preRun() {
         auton.schedule();
+        KoalaLog.start();
     }
 }

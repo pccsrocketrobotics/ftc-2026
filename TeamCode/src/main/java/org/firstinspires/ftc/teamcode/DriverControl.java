@@ -46,14 +46,14 @@ public class DriverControl extends CommonOpMode {
         );
         driver.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(sweeper.wristDownCommand());
         driver.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(sweeper.wristUpCommand());
-        driver.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(sweeper.grabberSpinCommand());
+        driver.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenHeld(sweeper.grabberSpinCommand());
 
         driver.getGamepadButton(GamepadKeys.Button.START).whenPressed(new InstantCommand(() -> drive.resetFieldCentric()));
 
         //Operator
 
-        operater.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(intake.outCommand().alongWith(transfer.outCommand()));
-        operater.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(intake.inCommand().alongWith(transfer.inCommand()));
+        operater.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(intake.outCommand().alongWith(transfer.outCommand()));
+        operater.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(intake.inCommand().alongWith(transfer.inCommand()));
         operater.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(intake.stopCommand().alongWith(transfer.stopCommand()));
         operater.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(intake.stopCommand().alongWith(transfer.stopCommand()));
 
