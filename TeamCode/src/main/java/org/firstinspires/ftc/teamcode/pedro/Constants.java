@@ -32,7 +32,7 @@ public class Constants {
                 c.backLeftName.set("lr");
                 c.backRightName.set("rr");
                 c.frontLeftDirection.set(DcMotorSimple.Direction.FORWARD);
-                c.frontRightDirection.set(DcMotorSimple.Direction.FORWARD);
+            c.frontRightDirection.set(DcMotorSimple.Direction.FORWARD);
                 c.backLeftDirection.set(DcMotorSimple.Direction.FORWARD);
                 c.backRightDirection.set(DcMotorSimple.Direction.FORWARD);
             } else {
@@ -127,7 +127,8 @@ public class Constants {
         );
     }
     public static boolean isPracticeBot() {
-        Log.i("robotSerial", Build.SERIAL);
-        return Build.SERIAL.equals(PRACTICE_BOT_SERIAL);
+        return false;
+//        Log.i("robotSerial", Build.SERIAL);
+//        return Build.SERIAL.equals(PRACTICE_BOT_SERIAL);
     }
 }
