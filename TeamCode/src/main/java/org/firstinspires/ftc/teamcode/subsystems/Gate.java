@@ -15,17 +15,20 @@ public class Gate extends SubsystemBase {
     private Servo gate1;
     private Servo gate2;
 
-    public static double GATE_OPENED = 0.75;
-    public static double GATE_CLOSED = 1;
+    public static double GATE1_OPENED = 0.75;
+    public static double GATE1_CLOSED = 1;
+    public static double GATE2_CLOSED = 0.5;
+
+    public static double GATE2_OPENED = 0.2;
 
     public Gate(HardwareMap hardwareMap) {
         gate1 = hardwareMap.get(Servo.class, "gate1");
         gate2 = hardwareMap.get(Servo.class, "gate2");
     }
 
-    public void gate(double position) {
-        gate1.setPosition(position);
-        gate2.setPosition(position);
+    public void gate(double position1, double position2) {
+        gate1.setPosition(position1);
+        gate2.setPosition(position2);
     }
 
     @Override
@@ -35,13 +38,13 @@ public class Gate extends SubsystemBase {
     }
     public Command gateOpenCommand() {
         return runOnce(
-                () -> gate(GATE_OPENED)
+                () -> gate(GATE1_OPENED, GATE2_OPENED)
         );
     }
 
     public Command gateCloseCommand() {
         return runOnce(
-                () -> gate(GATE_CLOSED)
+                () -> gate(GATE1_CLOSED, GATE2_CLOSED)
         );
     }
 
