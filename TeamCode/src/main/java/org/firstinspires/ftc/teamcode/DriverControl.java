@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.pedropathing.api.PoseFactory;
 import com.pedropathing.revhub.localizers.PinpointLocalizer;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.seattlesolvers.solverslib.command.CommandOpMode;
@@ -32,6 +33,7 @@ public class DriverControl extends CommonOpMode {
     public void initialize() {
         //setup subsystems
         super.initialize();
+        drive.getFollower().setPose(PoseFactory.degrees().of(0,0,90));
         boolean robot = Constants.isPracticeBot();
 
         // 1. Wrap the gamepads
