@@ -64,8 +64,8 @@ public class DriverControl extends CommonOpMode {
         operater.getGamepadButton(GamepadKeys.Button.X).whenPressed(shooter.shootCommand(() -> Shooter.SPEED3));
         operater.getGamepadButton(GamepadKeys.Button.Y).whenPressed(shooter.stopCommand());
 
-//        operater.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(gate.gateOpenCommand());
-//        operater.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(gate.gateCloseCommand());
+        operater.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(gate.gateOpenCommand());
+        operater.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(gate.gateCloseCommand());
 
 
     }

@@ -15,11 +15,10 @@ public class Gate extends SubsystemBase {
     private Servo gate1;
     private Servo gate2;
 
-    public static double GATE1_OPENED = 0.75;
+    public static double GATE1_OPENED = 0.5;
     public static double GATE1_CLOSED = 1;
     public static double GATE2_CLOSED = 0.5;
-
-    public static double GATE2_OPENED = 0.2;
+    public static double GATE2_OPENED = 1;
 
     public Gate(HardwareMap hardwareMap) {
         gate1 = hardwareMap.get(Servo.class, "gate1");

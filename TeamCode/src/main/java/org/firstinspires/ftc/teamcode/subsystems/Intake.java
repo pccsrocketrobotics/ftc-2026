@@ -28,14 +28,14 @@ public class Intake extends SubsystemBase {
     }
         public Command inCommand() {
              return startEnd(
-                  () -> spin(0.7),
+                  () -> spin(-0.7),
                   () -> spin(0)
             );
         }
 
         public Command outCommand() {
             return startEnd(
-                () -> spin(-0.7),
+                () -> spin(0.7),
                 () -> spin(0)
             );
         }

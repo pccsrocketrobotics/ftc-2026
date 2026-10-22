@@ -42,7 +42,7 @@ public class HiveShootPark extends CommonOpMode{
                 new SequentialCommandGroup(
                     drive.follow(shoot),
                     gate.gateOpenCommand(),
-                    transfer.inCommand().withTimeout(8000),
+                    transfer.inCommand().withTimeout(5000),
                     gate.gateCloseCommand()
                 ),
                 shooter.shootCommand(() -> Shooter.SPEED2)
