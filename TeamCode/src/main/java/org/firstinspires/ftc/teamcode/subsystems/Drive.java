@@ -46,6 +46,7 @@ public class Drive extends SubsystemBase {
     public void periodic() {
         follower.update();
         KoalaLog.logPose2d("Drive/Pose", follower.pose().x() * .0254, follower.pose().y() * .0254, follower.pose().heading(), true);
+        KoalaLog.logPose2d("Drive/PoseInch", follower.pose().x(), follower.pose().y(), Math.toDegrees(follower.pose().heading()), true);
         KoalaLog.log("Drive/IsBusy", follower.isBusy(), true);
     }
 

@@ -21,18 +21,15 @@ public class Shooter extends SubsystemBase {
     private final DcMotorEx shooter;
 //    public static double SPEED1 = 700;
     public static double SPEED2 = 1060;
-    public static double SPEED3 = 1200;
+    public static double SPEED3 = 1300;
     public static double SPEED4 = 1075;
-
-
-
+    public static double P = 400, I = 0, D = 0, F = 13.8;
     private double shooterSpeed;
-
 
     public Shooter(HardwareMap hardwareMap) {
         shooter = hardwareMap.get(DcMotorEx.class, "shooter");
         shooter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        shooter.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, new PIDFCoefficients(500, 0, 0,1));
+        shooter.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, new PIDFCoefficients(P, I, D, F));
     }
 
 
