@@ -17,13 +17,23 @@ import com.seattlesolvers.solverslib.pedroCommand.FollowPathCommand;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 
+import java.util.HashMap;
+
 import Ori.Coval.Logging.Logger.KoalaLog;
 
 public class Drive extends SubsystemBase {
 
     private Follower follower;
-    public Drive(HardwareMap hardwareMap) {
-        follower = Constants.create(hardwareMap);
+
+    public Drive(HardwareMap hardwareMap, HashMap<String, Object> blackboard) {
+        follower = (Follower) blackboard.get("follower");
+        if (follower == null) {
+            follower = Constants.create(hardwareMap);
+            blackboard.put("follower", follower);
+        } else {
+            follower.stop();
+        }
+
     }
 
     public Follower getFollower() {

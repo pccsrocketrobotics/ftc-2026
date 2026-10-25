@@ -39,7 +39,7 @@ public class CommonOpMode extends CommandOpMode {
         setupBulkReading();
 
         // 1. Create subsystems
-        drive = new Drive(hardwareMap);
+        drive = new Drive(hardwareMap, blackboard);
         intake = new Intake(hardwareMap);
         shooter = new Shooter(hardwareMap);
         sweeper = new Sweeper(hardwareMap);

@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.seattlesolvers.solverslib.command.Command;
 import com.seattlesolvers.solverslib.command.ParallelDeadlineGroup;
 import com.seattlesolvers.solverslib.command.SequentialCommandGroup;
+import com.seattlesolvers.solverslib.command.WaitCommand;
 
 import org.firstinspires.ftc.teamcode.subsystems.Shooter;
 
@@ -27,7 +28,7 @@ public class HiveShootPark extends CommonOpMode{
         PoseFactory p = PoseFactory.degrees(); // add this
 
         Pose startPose = p.of(60,8,90);
-        Pose shootPose = p.of(60,20,90);
+        Pose shootPose = p.of(60,20,85);
         Pose parkPose = p.of(12,90,90);
         Pose parkControlPose = p.of(30, 20, 90);
 
@@ -42,6 +43,7 @@ public class HiveShootPark extends CommonOpMode{
                 new SequentialCommandGroup(
                     drive.follow(shoot),
                     gate.gateOpenCommand(),
+                    new WaitCommand(1500),
                     transfer.inCommand().withTimeout(5000),
                     gate.gateCloseCommand()
                 ),
