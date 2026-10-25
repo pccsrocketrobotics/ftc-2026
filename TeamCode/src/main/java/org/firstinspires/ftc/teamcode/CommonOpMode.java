@@ -17,7 +17,9 @@ import org.firstinspires.ftc.teamcode.subsystems.Shooter;
 import org.firstinspires.ftc.teamcode.subsystems.Sweeper;
 import org.firstinspires.ftc.teamcode.subsystems.Transfer;
 
+import java.lang.reflect.Field;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import Ori.Coval.Logging.Logger.KoalaLog;
 
@@ -35,7 +37,18 @@ public class CommonOpMode extends CommandOpMode {
 
     @Override
     public void initialize() {
-        KoalaLog.setup(hardwareMap);
+        boolean logRunning = false;
+        try{
+            Field f = KoalaLog.class.getDeclaredField("RUNNING");
+            f.setAccessible(true);
+            logRunning = ((AtomicBoolean)f.get(null)).get();
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            //Do nothing
+        }
+        if(!logRunning) {
+            KoalaLog.setup(hardwareMap);
+            KoalaLog.start();
+        }
         setupBulkReading();
 
         // 1. Create subsystems
@@ -53,12 +66,14 @@ public class CommonOpMode extends CommandOpMode {
 
     @Override
     public void initialize_loop() {
+        super.initialize_loop();
         clearBulkReading();
     }
 
     @Override
     public void preRun() {
-        KoalaLog.start();
+        super.preRun();
+        KoalaLog.log("DS:enabled", true, false);
     }
 
     @Override
@@ -67,6 +82,13 @@ public class CommonOpMode extends CommandOpMode {
         super.run();
         dashboardTelemetry.update();
     }
+
+    @Override
+    public void end() {
+        super.end();
+        KoalaLog.log("DS:enabled", false, false);
+    }
+
     private void setupBulkReading() {
         allHubs = hardwareMap.getAll(LynxModule.class);
         for (LynxModule hub : allHubs) {

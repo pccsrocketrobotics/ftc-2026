@@ -37,7 +37,14 @@ public class Park extends CommonOpMode{
     }
     @Override
     public void preRun() {
+        super.preRun();
         auton.schedule();
-        KoalaLog.start();
+        KoalaLog.log("DS:autonomous", true, false);
+    }
+
+    @Override
+    public void end() {
+        super.end();
+        KoalaLog.log("DS:autonomous", false, false);
     }
 }

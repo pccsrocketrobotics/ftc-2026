@@ -75,4 +75,10 @@ public class DriverControl extends CommonOpMode {
         super.preRun();
         schedule(gate.gateCloseCommand());
     }
+
+    @Override
+    public void end() {
+        super.end();
+        KoalaLog.stop();
+    }
 }

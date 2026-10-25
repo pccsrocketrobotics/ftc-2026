@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
 import com.acmerobotics.dashboard.config.Config;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.seattlesolvers.solverslib.command.Command;
@@ -12,38 +11,38 @@ import Ori.Coval.Logging.Logger.KoalaLog;
 @Config
 public class Gate extends SubsystemBase {
 
-    private Servo gate1;
-    private Servo gate2;
+    private Servo gateL;
+    private Servo gateR;
 
-    public static double GATE1_OPENED = 0.5;
-    public static double GATE1_CLOSED = 1;
-    public static double GATE2_CLOSED = 0.5;
-    public static double GATE2_OPENED = 1;
+    public static double GATEL_OPENED = 0.5;
+    public static double GATEL_CLOSED = 1;
+    public static double GATER_CLOSED = 0.5;
+    public static double GATER_OPENED = 1;
 
     public Gate(HardwareMap hardwareMap) {
-        gate1 = hardwareMap.get(Servo.class, "gate1");
-        gate2 = hardwareMap.get(Servo.class, "gate2");
+        gateL = hardwareMap.get(Servo.class, "gateL");
+        gateR = hardwareMap.get(Servo.class, "gateR");
     }
 
     public void gate(double position1, double position2) {
-        gate1.setPosition(position1);
-        gate2.setPosition(position2);
+        gateL.setPosition(position1);
+        gateR.setPosition(position2);
     }
 
     @Override
     public void periodic() {
-        KoalaLog.log("Gate1/Position", gate1.getPosition(), true);
-        KoalaLog.log("Gate2/Position", gate2.getPosition(), true);
+        KoalaLog.log("GateL/Position", gateL.getPosition(), true);
+        KoalaLog.log("Gate2/Position", gateR.getPosition(), true);
     }
     public Command gateOpenCommand() {
         return runOnce(
-                () -> gate(GATE1_OPENED, GATE2_OPENED)
+                () -> gate(GATEL_OPENED, GATER_OPENED)
         );
     }
 
     public Command gateCloseCommand() {
         return runOnce(
-                () -> gate(GATE1_CLOSED, GATE2_CLOSED)
+                () -> gate(GATEL_CLOSED, GATER_CLOSED)
         );
     }
 
