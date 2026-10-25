@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import static com.pedropathing.api.Paths.*;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.math.Pose;
 import com.pedropathing.paths.Path;
@@ -17,6 +18,7 @@ import com.seattlesolvers.solverslib.pedroCommand.FollowPathCommand;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 
+import java.lang.annotation.Target;
 import java.util.HashMap;
 
 import Ori.Coval.Logging.Logger.KoalaLog;
@@ -66,6 +68,17 @@ public class Drive extends SubsystemBase {
                 );
                 follower.manual(powers);
             }
+        );
+    }
+    public Command assist(Pose target) {
+        return startEnd(
+                () -> {
+                    Path path = line(follower.pose(), target).linear(follower.pose(), target);
+                    follower.follow(path);
+                },
+                () -> {
+                    follower.stop();
+                }
         );
     }
 

@@ -34,6 +34,7 @@ public class DriverControl extends CommonOpMode {
     public void initialize() {
         //setup subsystems
         super.initialize();
+        PoseFactory p = PoseFactory.degrees();
 
         // 1. Wrap the gamepads
         GamepadEx driver = new GamepadEx(gamepad1);
@@ -49,6 +50,10 @@ public class DriverControl extends CommonOpMode {
         driver.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(sweeper.wristDownCommand());
         driver.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(sweeper.wristUpCommand());
         driver.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenHeld(sweeper.grabberSpinCommand());
+
+        driver.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenHeld(drive.assist(p.of(60,16,-90)));
+        driver.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenHeld(drive.assist(p.of(60,135,90)));
+        driver.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenHeld(drive.assist(p.of(20,125,180)));
 
         driver.getGamepadButton(GamepadKeys.Button.START).whenPressed(new InstantCommand(() -> drive.resetFieldCentric()));
 

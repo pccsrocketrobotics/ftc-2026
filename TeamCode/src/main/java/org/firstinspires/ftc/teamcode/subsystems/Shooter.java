@@ -21,7 +21,7 @@ public class Shooter extends SubsystemBase {
     private final DcMotorEx shooter;
 //    public static double SPEED1 = 700;
     public static double SPEED2 = 1060;
-    public static double SPEED3 = 1150;
+    public static double SPEED3 = 1200;
     public static double SPEED4 = 1075;
 
 
