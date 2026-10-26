@@ -37,15 +37,7 @@ public class CommonOpMode extends CommandOpMode {
 
     @Override
     public void initialize() {
-        boolean logRunning = false;
-        try{
-            Field f = KoalaLog.class.getDeclaredField("RUNNING");
-            f.setAccessible(true);
-            logRunning = ((AtomicBoolean)f.get(null)).get();
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            //Do nothing
-        }
-        if(!logRunning) {
+        if(!KoalaLog.isRunning()) {
             KoalaLog.setup(hardwareMap);
             KoalaLog.start();
         }
