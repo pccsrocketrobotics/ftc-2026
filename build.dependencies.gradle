@@ -24,6 +24,6 @@ dependencies {
 
     implementation "org.solverslib:pedroPathing:0.3.6"
     implementation 'com.pedropathing:revhub:3.0.1'
-    implementation 'com.pedropathing:tuning:1.0.1'
+    implementation 'com.pedropathing:tuning:1.0.3-beta.1'
     implementation "com.bylazar.sloth:fullpanels:0.3.2+1.0.13"
 }
