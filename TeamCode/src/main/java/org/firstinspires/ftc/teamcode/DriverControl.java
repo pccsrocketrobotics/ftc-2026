@@ -54,14 +54,13 @@ public class DriverControl extends CommonOpMode {
         driver.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(flowerCollector.wristDownCommand());
         driver.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(flowerCollector.wristUpCommand());
 
-        driver.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenHeld(drive.assist(p.of(60,16,-90)));
-        driver.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenHeld(drive.assist(p.of(60,135,85)));
-        driver.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenHeld(drive.assist(p.of(20,125,180)));
+        driver.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenHeld(drive.assist(p.of(55.2,25.3,-96)));
+        driver.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenHeld(drive.assist(p.of(55.2,117,96)));
+        driver.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenHeld(drive.assist(p.of(12.5,117,90)));
 
         driver.getGamepadButton(GamepadKeys.Button.START).whenPressed(new InstantCommand(() -> drive.resetFieldCentric()));
 
         //Operator
-
         operater.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(intake.outCommand().alongWith(transfer.outCommand()));
         operater.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(intake.inCommand().alongWith(transfer.inCommand()));
         operater.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(intake.stopCommand().alongWith(transfer.stopCommand()));
@@ -74,8 +73,6 @@ public class DriverControl extends CommonOpMode {
 
         operater.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(gate.gateOpenCommand());
         operater.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(gate.gateCloseCommand());
-
-
     }
 
     @Override

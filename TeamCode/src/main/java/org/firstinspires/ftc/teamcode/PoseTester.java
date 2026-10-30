@@ -21,7 +21,7 @@ public class PoseTester extends LinearOpMode {
         waitForStart();
         PoseFactory p = PoseFactory.degrees();
         Follower follower = Constants.create(hardwareMap);
-        Pose startPose = p.of(0,0,0);
+        Pose startPose = p.of(6.7,6.4,0);
         follower.setPose(startPose);
         if(opModeIsActive()) {
             while (opModeIsActive()) {

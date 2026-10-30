@@ -23,8 +23,8 @@ public class Park extends CommonOpMode{
 
         PoseFactory p = PoseFactory.degrees(); // add this
 
-        Pose startPose = p.of(60,136,90);
-        Pose parkPose = p.of(12,125,90);
+        Pose startPose = p.of(57,130.7,90);
+        Pose parkPose = p.of(12.5,117,90);
 
         Follower follower = drive.getFollower();
         follower.setPose(startPose);

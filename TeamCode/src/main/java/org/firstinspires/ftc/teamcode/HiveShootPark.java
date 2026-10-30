@@ -27,10 +27,10 @@ public class HiveShootPark extends CommonOpMode{
 
         PoseFactory p = PoseFactory.degrees(); // add this
 
-        Pose startPose = p.of(60,8,90);
-        Pose shootPose = p.of(60,20,-85);
-        Pose parkPose = p.of(12,90,90);
-        Pose parkControlPose = p.of(30, 20, 90);
+        Pose startPose = p.of(54,10.2,-90);
+        Pose shootPose = p.of(55.2,25.3,-96);
+        Pose parkPose = p.of(10.6,96.6,-90);
+        Pose parkControlPose = p.of(25.7,39.7,-90);
 
         Follower follower = drive.getFollower();
         follower.setPose(startPose);
