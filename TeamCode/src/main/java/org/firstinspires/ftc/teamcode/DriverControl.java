@@ -18,10 +18,11 @@ import com.pedropathing.follower.ManualDrive;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 import org.firstinspires.ftc.teamcode.subsystems.Drive;
+import org.firstinspires.ftc.teamcode.subsystems.FlowerCollector;
 import org.firstinspires.ftc.teamcode.subsystems.Gate;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.subsystems.Shooter;
-import org.firstinspires.ftc.teamcode.subsystems.Sweeper;
+import org.firstinspires.ftc.teamcode.subsystems.FlowerCollector;
 import org.firstinspires.ftc.teamcode.subsystems.Transfer;
 
 import java.util.function.BooleanSupplier;
@@ -47,12 +48,14 @@ public class DriverControl extends CommonOpMode {
         drive.setDefaultCommand(
                 drive.manualDrive(gamepad1)
         );
-        driver.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(sweeper.wristDownCommand());
-        driver.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(sweeper.wristUpCommand());
-        driver.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenHeld(sweeper.grabberSpinCommand());
+        cheeseS.setDefaultCommand(
+                cheeseS.inSideCommand()
+        );
+        driver.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(flowerCollector.wristDownCommand());
+        driver.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(flowerCollector.wristUpCommand());
 
         driver.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenHeld(drive.assist(p.of(60,16,-90)));
-        driver.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenHeld(drive.assist(p.of(60,135,90)));
+        driver.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenHeld(drive.assist(p.of(60,135,85)));
         driver.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenHeld(drive.assist(p.of(20,125,180)));
 
         driver.getGamepadButton(GamepadKeys.Button.START).whenPressed(new InstantCommand(() -> drive.resetFieldCentric()));
@@ -62,11 +65,11 @@ public class DriverControl extends CommonOpMode {
         operater.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(intake.outCommand().alongWith(transfer.outCommand()));
         operater.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(intake.inCommand().alongWith(transfer.inCommand()));
         operater.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(intake.stopCommand().alongWith(transfer.stopCommand()));
-        operater.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(intake.stopCommand().alongWith(transfer.stopCommand()));
+        operater.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(intake.outCommand().alongWith(transfer.inCommand()));
 
         operater.getGamepadButton(GamepadKeys.Button.A).whenPressed(shooter.stopCommand());
         operater.getGamepadButton(GamepadKeys.Button.B).whenPressed(shooter.shootCommand(() -> Shooter.SPEED2));
-        operater.getGamepadButton(GamepadKeys.Button.X).whenPressed(shooter.shootCommand(() -> Shooter.SPEED3));
+        operater.getGamepadButton(GamepadKeys.Button.X).whenPressed(shooter.shootCommand(() -> Shooter.SPEED2));
         operater.getGamepadButton(GamepadKeys.Button.Y).whenPressed(shooter.stopCommand());
 
         operater.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(gate.gateOpenCommand());

@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import com.qualcomm.robotcore.hardware.CRServo;
 import  com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.seattlesolvers.solverslib.command.Command;
@@ -17,6 +18,7 @@ public class Intake extends SubsystemBase {
         intake = hardwareMap.get(DcMotorEx.class, "intake");
     }
 
+
     public void periodic() {
         KoalaLog.log("Intake/Power", intake.getPower(), true);
         KoalaLog.log("Intake/Speed", intake.getVelocity(), true);
@@ -26,6 +28,7 @@ public class Intake extends SubsystemBase {
     intakePower = power;
     intake.setPower(power);
     }
+
         public Command inCommand() {
              return startEnd(
                   () -> spin(-0.7),
@@ -46,4 +49,5 @@ public class Intake extends SubsystemBase {
                 () -> {}
             );
         }
+
 }

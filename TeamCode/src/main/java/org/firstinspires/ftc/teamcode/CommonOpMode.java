@@ -11,11 +11,12 @@ import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.subsystems.Drive;
+import org.firstinspires.ftc.teamcode.subsystems.FlowerCollector;
 import org.firstinspires.ftc.teamcode.subsystems.Gate;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.subsystems.Shooter;
-import org.firstinspires.ftc.teamcode.subsystems.Sweeper;
 import org.firstinspires.ftc.teamcode.subsystems.Transfer;
+import org.intellij.lang.annotations.Flow;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -29,9 +30,10 @@ public class CommonOpMode extends CommandOpMode {
     protected Drive drive;
     protected Intake intake;
     protected Shooter shooter;
-    protected Sweeper sweeper;
+    protected FlowerCollector flowerCollector;
     protected Transfer transfer;
     protected Gate gate;
+    protected CheeseS cheeseS;
 
     private List<LynxModule> allHubs;
 
@@ -47,12 +49,13 @@ public class CommonOpMode extends CommandOpMode {
         drive = new Drive(hardwareMap, blackboard);
         intake = new Intake(hardwareMap);
         shooter = new Shooter(hardwareMap);
-        sweeper = new Sweeper(hardwareMap);
+        flowerCollector = new FlowerCollector(hardwareMap);
         transfer = new Transfer(hardwareMap);
         gate = new Gate(hardwareMap);
+        cheeseS = new CheeseS(hardwareMap);
 
         // 2. Register them so periodic() runs
-        register(drive, intake, shooter, sweeper, transfer, gate);
+        register(drive, intake, shooter, flowerCollector, transfer, gate);
 
     }
 
