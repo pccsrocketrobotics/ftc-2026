@@ -84,7 +84,7 @@ public class Drive extends SubsystemBase {
     }
 
     public void resetFieldCentric() {
-        follower.localizer.reset();
+        follower.setPose(new Pose(follower.pose().x(), follower.pose().y(), 0));
     }
 
     public Command follow(Path path) {
