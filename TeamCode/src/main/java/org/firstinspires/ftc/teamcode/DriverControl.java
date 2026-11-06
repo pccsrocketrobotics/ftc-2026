@@ -31,6 +31,7 @@ import Ori.Coval.Logging.Logger.KoalaLog;
 
 @TeleOp
 public class DriverControl extends CommonOpMode {
+    private boolean autoStart = true;
     @Override
     public void initialize() {
         //setup subsystems
@@ -40,6 +41,7 @@ public class DriverControl extends CommonOpMode {
         // 1. Wrap the gamepads
         GamepadEx driver = new GamepadEx(gamepad1);
         GamepadEx operater = new GamepadEx(gamepad2);
+
 
 
         // 2. Bind buttons to commands
@@ -77,12 +79,25 @@ public class DriverControl extends CommonOpMode {
     }
 
     @Override
+    public void initialize_loop() {
+        super.initialize_loop();
+        if(gamepad1.start || gamepad2.start){
+            autoStart = false;
+        }
+        telemetry.addData( "autoStart", autoStart);
+        telemetry.update();
+    }
+
+    @Override
     public void preRun() {
         super.preRun();
-        schedule(gate.gateCloseCommand());
-        schedule(shooter.shootCommand(()-> Shooter.SPEED2));
-        schedule(intake.inCommand());
-        schedule(transfer.inCommand());
+        if(autoStart) {
+            schedule(gate.gateCloseCommand());
+            schedule(shooter.shootCommand(()-> Shooter.SPEED2));
+            schedule(intake.inCommand());
+            schedule(transfer.inCommand());
+        }
+
     }
 
     @Override
