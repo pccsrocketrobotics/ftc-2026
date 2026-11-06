@@ -1,10 +1,13 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
 import static com.pedropathing.api.Paths.*;
+
+import com.pedropathing.controllers.PIDController;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.math.Pose;
 import com.pedropathing.paths.Path;
 import com.pedropathing.revhub.localizers.PinpointLocalizer;
+import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.seattlesolvers.solverslib.command.Command;
@@ -26,8 +29,10 @@ import Ori.Coval.Logging.Logger.KoalaLog;
 public class Drive extends SubsystemBase {
 
     private Follower follower;
-
-    public Drive(HardwareMap hardwareMap, HashMap<String, Object> blackboard) {
+    private Vision vision;
+    private boolean headingLock = false;
+    private double targetHeading = 0;
+    public Drive(HardwareMap hardwareMap, HashMap<String, Object> blackboard, Vision vision) {
         follower = (Follower) blackboard.get("follower");
         if (follower == null) {
             follower = Constants.create(hardwareMap);
@@ -35,7 +40,7 @@ public class Drive extends SubsystemBase {
         } else {
             follower.stop();
         }
-
+        this.vision = vision;
     }
 
     public Follower getFollower() {
@@ -67,6 +72,17 @@ public class Drive extends SubsystemBase {
                     turn,
                     follower.pose().heading()
                 );
+                if (gamepad.a) {
+                    if (vision.getClusterId() != Vision.NO_TAG) {
+                        targetHeading = follower.pose().heading() + vision.getBearing();
+                        headingLock = true;
+                    }
+                } else {
+                    headingLock = false;
+                }
+                if (headingLock) {
+                    powers = ManualDrive.headingLock(follower, Constants.foresightConfig.headingFeedback.get(), powers, targetHeading);
+                }
                 follower.manual(powers);
             }
         );

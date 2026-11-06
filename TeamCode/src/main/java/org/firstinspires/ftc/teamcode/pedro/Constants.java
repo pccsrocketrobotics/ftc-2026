@@ -22,6 +22,10 @@ import org.firstinspires.ftc.teamcode.CommonOpMode;
 
 public class Constants {
 
+    public enum Alliance{
+        BLUE,
+        RED
+    }
     public static String PRACTICE_BOT_SERIAL = "a991cf9f16920959";
 
     public static MecanumConfig drivetrainConfig = new MecanumConfig

@@ -16,6 +16,7 @@ import org.firstinspires.ftc.teamcode.subsystems.Gate;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.subsystems.Shooter;
 import org.firstinspires.ftc.teamcode.subsystems.Transfer;
+import org.firstinspires.ftc.teamcode.subsystems.Vision;
 import org.intellij.lang.annotations.Flow;
 
 import java.lang.reflect.Field;
@@ -34,6 +35,7 @@ public class CommonOpMode extends CommandOpMode {
     protected Transfer transfer;
     protected Gate gate;
     protected CheeseS cheeseS;
+    protected Vision vision;
 
     private List<LynxModule> allHubs;
 
@@ -46,13 +48,14 @@ public class CommonOpMode extends CommandOpMode {
         setupBulkReading();
 
         // 1. Create subsystems
-        drive = new Drive(hardwareMap, blackboard);
+        drive = new Drive(hardwareMap, blackboard, vision);
         intake = new Intake(hardwareMap);
         shooter = new Shooter(hardwareMap);
         flowerCollector = new FlowerCollector(hardwareMap);
         transfer = new Transfer(hardwareMap);
         gate = new Gate(hardwareMap);
         cheeseS = new CheeseS(hardwareMap);
+        vision = new Vision(hardwareMap);
 
         // 2. Register them so periodic() runs
         register(drive, intake, shooter, flowerCollector, transfer, gate);
