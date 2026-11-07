@@ -50,9 +50,6 @@ public class DriverControl extends CommonOpMode {
         drive.setDefaultCommand(
                 drive.manualDrive(gamepad1)
         );
-        cheeseS.setDefaultCommand(
-                cheeseS.inSideCommand()
-        );
         driver.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(flowerCollector.wristDownCommand());
         driver.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(flowerCollector.wristUpCommand());
 
@@ -92,6 +89,7 @@ public class DriverControl extends CommonOpMode {
     public void preRun() {
         super.preRun();
         if(autoStart) {
+            schedule(cheeseS.inSideCommand());
             schedule(gate.gateCloseCommand());
             schedule(shooter.shootCommand(()-> Shooter.SPEED2));
             schedule(intake.inCommand());

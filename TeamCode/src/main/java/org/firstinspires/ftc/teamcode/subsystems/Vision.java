@@ -7,6 +7,8 @@ import com.seattlesolvers.solverslib.command.SubsystemBase;
 
 import org.firstinspires.ftc.teamcode.pedro.Constants.Alliance;
 
+import Ori.Coval.Logging.Logger.KoalaLog;
+
 public class Vision extends SubsystemBase {
     private static final int CLUSTER_PIPELINE = 1;
     public static double CAMERA_PITCH = 30;
@@ -22,21 +24,30 @@ public class Vision extends SubsystemBase {
     private double height = 0;
     private double elevation = 0;
     private double stickerPitch = 0;
-    private double roll = 7;
+    private double roll = 0;
+    private double latency = 0;
 
     public Vision(HardwareMap hardwareMap) {
-        limelight = hardwareMap.get(Limelight3A.class, "limelight");
-        limelight.pipelineSwitch(CLUSTER_PIPELINE);
-        limelight.start();
+        // Keep the robot running without vision if the Limelight isn't configured or connected
+        try {
+            limelight = hardwareMap.get(Limelight3A.class, "limelight");
+            limelight.pipelineSwitch(CLUSTER_PIPELINE);
+            limelight.start();
+        } catch (Exception e) {
+            limelight = null;
+        }
+        KoalaLog.log("Vision/Connected", limelight != null, true);
     }
 
     public void setAlliance(Alliance alliance) {
+        if (limelight == null) return;
         limelight.updatePythonInputs(new double[]{1, alliance.ordinal(), CAMERA_PITCH, 0, 0, 0, 0, 0});
+        KoalaLog.log("Vision/Alliance", alliance.ordinal(), true);
     }
 
     @Override
     public void periodic() {
-        LLResult result = limelight.getLatestResult();
+        LLResult result = (limelight != null) ? limelight.getLatestResult() : null;
         double[] py = (result != null) ? result.getPythonOutput() : null;
 
         if (py != null && py.length >= 8 && py[CLUSTER_ID] >= 0) {
@@ -48,11 +59,29 @@ public class Vision extends SubsystemBase {
             elevation = py[ELEVATION];
             stickerPitch = py[STICKER_PITCH];
             roll = py[ROLL];
+            latency = result.getCaptureLatency() + result.getTargetingLatency();
 
             //        Math.abs(py[ROLL]) < 90 ? "right-side up" : "upside down");
         } else {
             clusterId = NO_TAG;
+            numTags = 0;
+            range = 0;
+            bearing = 0;
+            height = 0;
+            elevation = 0;
+            stickerPitch = 0;
+            roll = 0;
+            latency = 0;
         }
+        KoalaLog.log("Vision/ClusterId", clusterId, true);
+        KoalaLog.log("Vision/NumTags", numTags, true);
+        KoalaLog.log("Vision/Range", range, true);
+        KoalaLog.log("Vision/Bearing", bearing, true);
+        KoalaLog.log("Vision/Height", height, true);
+        KoalaLog.log("Vision/Elevation", elevation, true);
+        KoalaLog.log("Vision/StickerPitch", stickerPitch, true);
+        KoalaLog.log("Vision/Roll", roll, true);
+        KoalaLog.log("Vision/Latency", latency, true);
     }
 
     public int getClusterId() {
@@ -83,6 +112,10 @@ public class Vision extends SubsystemBase {
 
     public double getRoll() {
         return roll;
+    }
+
+    public double getLatency() {
+        return latency;
     }
 
 }

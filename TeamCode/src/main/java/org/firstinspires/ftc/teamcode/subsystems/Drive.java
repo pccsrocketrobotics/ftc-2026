@@ -73,7 +73,7 @@ public class Drive extends SubsystemBase {
                     follower.pose().heading()
                 );
                 if (gamepad.a) {
-                    if (vision.getClusterId() != Vision.NO_TAG) {
+                    if (vision.getClusterId() != Vision.NO_TAG && !headingLock) {
                         targetHeading = follower.pose().heading() + Math.toRadians(vision.getBearing());
                         headingLock = true;
                     }
@@ -81,7 +81,15 @@ public class Drive extends SubsystemBase {
                     headingLock = false;
                 }
                 if (headingLock) {
-                    powers = ManualDrive.headingLock(follower, Constants.foresightConfig.headingFeedback.get(), powers, targetHeading);
+                    powers = ManualDrive.headingLock(
+                        follower,
+                        Constants.foresightConfig.headingFeedback.get(),
+                        powers,
+                        targetHeading,
+                        Constants.foresightConfig.headingBrakeCoefficients.get().x(),
+                        Constants.foresightConfig.headingBrakeCoefficients.get().y(),
+                        1.0);
+
                 }
                 follower.manual(powers);
             }
