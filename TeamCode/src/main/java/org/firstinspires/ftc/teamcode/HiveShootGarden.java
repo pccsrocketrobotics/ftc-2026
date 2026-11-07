@@ -71,7 +71,7 @@ public class HiveShootGarden extends CommonOpMode{
                         intake.inCommand()
                     )
                 ),
-                shooter.shootCommand(() -> Shooter.SPEED2),
+                shooter.shootCommand(() -> Shooter.SPEED2 - 20),
                 cheeseS.inSideCommand()
             ),
             drive.follow(park)
