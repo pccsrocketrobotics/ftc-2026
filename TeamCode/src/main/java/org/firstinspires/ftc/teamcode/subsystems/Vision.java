@@ -31,7 +31,7 @@ public class Vision extends SubsystemBase {
     }
 
     public void setAlliance(Alliance alliance) {
-        limelight.updatePythonInputs(new double[]{alliance.ordinal(), CAMERA_PITCH, 0, 0, 0, 0, 0, 0});
+        limelight.updatePythonInputs(new double[]{1, alliance.ordinal(), CAMERA_PITCH, 0, 0, 0, 0, 0});
     }
 
     @Override

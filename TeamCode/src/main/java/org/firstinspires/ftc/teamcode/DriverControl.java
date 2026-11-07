@@ -34,11 +34,6 @@ public class DriverControl extends CommonOpMode {
     private boolean autoStart = true;
     @Override
     public void initialize() {
-        if (gamepad1.x) {
-            vision.setAlliance(Constants.Alliance.BLUE);
-        } else if (gamepad1.b) {
-            vision.setAlliance(Constants.Alliance.RED);
-        }
         //setup subsystems
         super.initialize();
         PoseFactory p = PoseFactory.degrees();

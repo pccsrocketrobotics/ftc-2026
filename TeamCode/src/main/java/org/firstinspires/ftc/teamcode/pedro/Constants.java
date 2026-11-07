@@ -22,7 +22,8 @@ import org.firstinspires.ftc.teamcode.CommonOpMode;
 
 public class Constants {
 
-    public enum Alliance{
+    public enum Alliance {
+        ANY,
         BLUE,
         RED
     }
