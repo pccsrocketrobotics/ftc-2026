@@ -53,8 +53,8 @@ public class DriverControl extends CommonOpMode {
         driver.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(flowerCollector.wristDownCommand());
         driver.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(flowerCollector.wristUpCommand());
 
-        driver.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenHeld(drive.assist(p.of(55.2,26.3,-96)));
-        driver.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenHeld(drive.assist(p.of(55.2,115,96)));
+        driver.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenHeld(drive.assist(p.of(58,26.3,-96)));
+        driver.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenHeld(drive.assist(p.of(58,115,96)));
         driver.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenHeld(drive.assist(p.of(12.5,117,90)));
 
         driver.getGamepadButton(GamepadKeys.Button.PS).whenPressed(new InstantCommand(() -> drive.resetFieldCentric()));

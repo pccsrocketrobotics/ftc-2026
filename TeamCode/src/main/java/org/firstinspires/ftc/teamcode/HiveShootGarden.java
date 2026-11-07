@@ -32,7 +32,7 @@ public class HiveShootGarden extends CommonOpMode{
 
         Pose startPose = p.of(54,10.2,-90);
         Pose shootPose = p.of(55.2,25.3,-96);
-        Pose gardenControlPose = p.of(30 ,5 , 188);
+        Pose gardenControlPose = p.of(30 ,5 , 200);
         Pose gardenPose = p.of(12 ,5 ,188);
         Pose parkPose = p.of(10.6,96.6,-90);
         Pose parkControlPose = p.of(25.7,39.7,-90);

@@ -11,7 +11,7 @@ import Ori.Coval.Logging.Logger.KoalaLog;
 
 public class Vision extends SubsystemBase {
     private static final int CLUSTER_PIPELINE = 1;
-    public static double CAMERA_PITCH = 30;
+    public static double CAMERA_PITCH = 45;
 
     public static final int NO_TAG = -1;
     private static final int CLUSTER_ID = 0, NUM_TAGS = 1, RANGE = 2, BEARING = 3,
