@@ -19,9 +19,9 @@ import Ori.Coval.Logging.Logger.KoalaLog;
 @Config
 public class Shooter extends SubsystemBase {
     private final DcMotorEx shooter;
-    public static double SPEED1 = 1000;
-    public static double SPEED2 = 1060;
-    public static double SPEED3 = 1100;
+    public static double SPEED1 = 1100;
+    public static double SPEED2 = 1200;
+    public static double SPEED3 = 1300;
     public static double P = 400, I = 0, D = 0, F = 13.8;
     private double shooterSpeed;
 

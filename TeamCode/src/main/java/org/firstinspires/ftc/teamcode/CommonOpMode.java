@@ -48,6 +48,8 @@ public class CommonOpMode extends CommandOpMode {
         setupBulkReading();
 
         // 1. Create subsystems
+
+        vision = new Vision(hardwareMap);
         drive = new Drive(hardwareMap, blackboard, vision);
         intake = new Intake(hardwareMap);
         shooter = new Shooter(hardwareMap);
@@ -55,7 +57,7 @@ public class CommonOpMode extends CommandOpMode {
         transfer = new Transfer(hardwareMap);
         gate = new Gate(hardwareMap);
         cheeseS = new CheeseS(hardwareMap);
-        vision = new Vision(hardwareMap);
+
 
         // 2. Register them so periodic() runs
         register(drive, intake, shooter, flowerCollector, transfer, gate);

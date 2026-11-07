@@ -74,7 +74,7 @@ public class Drive extends SubsystemBase {
                 );
                 if (gamepad.a) {
                     if (vision.getClusterId() != Vision.NO_TAG) {
-                        targetHeading = follower.pose().heading() + vision.getBearing();
+                        targetHeading = follower.pose().heading() + Math.toRadians(vision.getBearing());
                         headingLock = true;
                     }
                 } else {
