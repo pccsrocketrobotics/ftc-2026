@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode.subsystems;
 
 import static com.pedropathing.api.Paths.*;
 
+import com.pedropathing.algorithm.Foresight;
+import com.pedropathing.algorithm.ForesightConfig;
 import com.pedropathing.controllers.PIDController;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.math.Pose;
@@ -47,6 +49,10 @@ public class Drive extends SubsystemBase {
         return follower;
     }
 
+    public ForesightConfig foresightConfig() {
+        return ((Foresight) follower.algorithm()).config;
+    }
+
     @Override
     public void periodic() {
         follower.update();
@@ -83,13 +89,12 @@ public class Drive extends SubsystemBase {
                 if (headingLock) {
                     powers = ManualDrive.headingLock(
                         follower,
-                        Constants.foresightConfig.headingFeedback.get(),
+                        foresightConfig().headingFeedback.get(),
                         powers,
                         targetHeading,
-                        Constants.foresightConfig.headingBrakeCoefficients.get().x(),
-                        Constants.foresightConfig.headingBrakeCoefficients.get().y(),
+                        foresightConfig().headingBrakeCoefficients.get().x(),
+                        foresightConfig().headingBrakeCoefficients.get().y(),
                         1.0);
-
                 }
                 follower.manual(powers);
             }

@@ -25,7 +25,7 @@ public class HiveShootPark extends CommonOpMode{
     public void initialize() {
         super.initialize();
 
-        PoseFactory p = PoseFactory.degrees(); // add this
+        PoseFactory p = PoseFactory.degrees();
 
         Pose startPose = p.of(54,10.2,-90);
         Pose shootPose = p.of(55.2,25.3,-96);

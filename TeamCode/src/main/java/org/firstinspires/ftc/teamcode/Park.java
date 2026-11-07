@@ -21,7 +21,7 @@ public class Park extends CommonOpMode{
     public void initialize() {
         super.initialize();
 
-        PoseFactory p = PoseFactory.degrees(); // add this
+        PoseFactory p = PoseFactory.degrees();
 
         Pose startPose = p.of(57,130.7,90);
         Pose parkPose = p.of(12.5,117,90);
