@@ -6,8 +6,6 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.seattlesolvers.solverslib.command.Command;
 import com.seattlesolvers.solverslib.command.SubsystemBase;
 
-import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
-
 import Ori.Coval.Logging.Logger.KoalaLog;
 
 
@@ -24,7 +22,6 @@ public class Intake extends SubsystemBase {
     public void periodic() {
         KoalaLog.log("Intake/Power", intake.getPower(), true);
         KoalaLog.log("Intake/Speed", intake.getVelocity(), true);
-        KoalaLog.log("Intake/Current", intake.getCurrent(CurrentUnit.AMPS), true);
     }
 
     public void spin(double power) {

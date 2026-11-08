@@ -22,7 +22,6 @@ import com.seattlesolvers.solverslib.geometry.Pose2d;
 import com.seattlesolvers.solverslib.geometry.Pose2dExtKt;
 import com.seattlesolvers.solverslib.pedroCommand.FollowPathCommand;
 
-import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 
@@ -75,8 +74,6 @@ public class Drive extends SubsystemBase {
             String name = WHEEL_NAMES[i];
             KoalaLog.log("Drive/" + name + "Power", wheels[i].getPower(), true);
             KoalaLog.log("Drive/" + name + "Speed", wheels[i].getVelocity(), true);
-            // getCurrent is not bulk cached: each call is a separate hardware read
-            KoalaLog.log("Drive/" + name + "Current", wheels[i].getCurrent(CurrentUnit.AMPS), true);
         }
     }
 
