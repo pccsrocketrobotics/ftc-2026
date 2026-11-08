@@ -15,6 +15,7 @@ import org.firstinspires.ftc.teamcode.subsystems.Drive;
 import org.firstinspires.ftc.teamcode.subsystems.FlowerCollector;
 import org.firstinspires.ftc.teamcode.subsystems.Gate;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
+import org.firstinspires.ftc.teamcode.subsystems.PowerSwitch;
 import org.firstinspires.ftc.teamcode.subsystems.Shooter;
 import org.firstinspires.ftc.teamcode.subsystems.Transfer;
 import org.firstinspires.ftc.teamcode.subsystems.Vision;
@@ -37,6 +38,7 @@ public class CommonOpMode extends CommandOpMode {
     protected Gate gate;
     protected CheeseS cheeseS;
     protected Vision vision;
+    protected PowerSwitch powerSwitch;
 
     private List<LynxModule> allHubs;
 
@@ -56,6 +58,7 @@ public class CommonOpMode extends CommandOpMode {
         transfer = new Transfer(hardwareMap);
         gate = new Gate(hardwareMap);
         cheeseS = new CheeseS(hardwareMap);
+        powerSwitch = new PowerSwitch(hardwareMap);
 
     }
 

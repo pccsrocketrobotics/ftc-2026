@@ -28,13 +28,11 @@ public class Vision extends SubsystemBase {
     private double latency = 0;
 
     public Vision(HardwareMap hardwareMap) {
-        // Keep the robot running without vision if the Limelight isn't configured or connected
-        try {
-            limelight = hardwareMap.get(Limelight3A.class, "limelight");
+        // Keep the robot running without vision if the Limelight isn't configured
+        limelight = hardwareMap.tryGet(Limelight3A.class, "limelight");
+        if (limelight != null) {
             limelight.pipelineSwitch(CLUSTER_PIPELINE);
             limelight.start();
-        } catch (Exception e) {
-            limelight = null;
         }
         KoalaLog.log("Vision/Connected", limelight != null, true);
     }

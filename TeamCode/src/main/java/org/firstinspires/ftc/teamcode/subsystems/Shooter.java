@@ -11,6 +11,7 @@ import com.seattlesolvers.solverslib.command.Command;
 import com.seattlesolvers.solverslib.command.SubsystemBase;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 
 import java.util.function.DoubleSupplier;
 
@@ -36,6 +37,7 @@ public class Shooter extends SubsystemBase {
     public void periodic() {
         KoalaLog.log("Shooter/Speed", shooter.getVelocity(), true);
         KoalaLog.log("Shooter/Target", shooterSpeed, true);
+        KoalaLog.log("Shooter/Current", shooter.getCurrent(CurrentUnit.AMPS), true);
     }
 
     public void shoot (double speed) {
