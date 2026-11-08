@@ -173,7 +173,9 @@ public class Drive extends SubsystemBase {
 
     public void resetFieldCentric() {
         KoalaLog.log("Drive/HeadingBeforeReset", Math.toDegrees(follower.pose().heading()), true);
-        follower.setPose(new Pose(follower.pose().x(), follower.pose().y(), 0));
+        Pose before = follower.pose();
+        follower.localizer.reset();
+        follower.setPose(new Pose(before.x(), before.y(), 0));
     }
 
     public Command follow(Path path) {
