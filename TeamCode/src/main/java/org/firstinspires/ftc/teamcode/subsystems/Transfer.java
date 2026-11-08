@@ -9,16 +9,18 @@ import Ori.Coval.Logging.Logger.KoalaLog;
 
 public class Transfer extends SubsystemBase {
     private final DcMotorEx transfer;
+    private double transferPower = 0;
     public Transfer(HardwareMap hardwareMap) {
         transfer = hardwareMap.get(DcMotorEx.class, "transfer");
 
     }
     public void spin(double power) {
+        transferPower = power;
         transfer.setPower(power);
     }
     @Override
     public void periodic() {
-        KoalaLog.log("Transfer/Power", transfer.getPower(), true);
+        KoalaLog.log("Transfer/Power", transferPower, true);
         KoalaLog.log("Transfer/Speed", transfer.getVelocity(), true);
     }
 

@@ -70,9 +70,10 @@ public class Drive extends SubsystemBase {
         KoalaLog.logPose2d("Drive/Pose", follower.pose().x() * .0254, follower.pose().y() * .0254, follower.pose().heading(), true);
         KoalaLog.logPose2d("Drive/PoseInch", follower.pose().x(), follower.pose().y(), Math.toDegrees(follower.pose().heading()), true);
         KoalaLog.log("Drive/IsBusy", follower.isBusy(), true);
+        Mecanum mecanum = (Mecanum) follower.drivetrain;
         for (int i = 0; i < wheels.length; i++) {
             String name = WHEEL_NAMES[i];
-            KoalaLog.log("Drive/" + name + "Power", wheels[i].getPower(), true);
+            KoalaLog.log("Drive/" + name + "Power", mecanum.wheelPowers[i], true);
             KoalaLog.log("Drive/" + name + "Speed", wheels[i].getVelocity(), true);
         }
     }

@@ -20,7 +20,7 @@ public class Intake extends SubsystemBase {
 
 
     public void periodic() {
-        KoalaLog.log("Intake/Power", intake.getPower(), true);
+        KoalaLog.log("Intake/Power", intakePower, true);
         KoalaLog.log("Intake/Speed", intake.getVelocity(), true);
     }
 

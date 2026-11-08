@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.hardware.lynx.LynxModule;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.seattlesolvers.solverslib.command.CommandOpMode;
 import com.seattlesolvers.solverslib.command.Robot;
@@ -41,6 +42,7 @@ public class CommonOpMode extends CommandOpMode {
     protected PowerSwitch powerSwitch;
 
     private List<LynxModule> allHubs;
+    private long lastLoopStart = 0;
 
     @Override
     public void initialize() {
@@ -82,15 +84,47 @@ public class CommonOpMode extends CommandOpMode {
 
     @Override
     public void run() {
+        long loopStart = System.nanoTime();
+        if (lastLoopStart != 0) {
+            KoalaLog.log("Loop/IntervalMs", (loopStart - lastLoopStart) / 1e6, true);
+        }
+        lastLoopStart = loopStart;
         clearBulkReading();
+        logGamepad("Gamepad1", gamepad1);
+        logGamepad("Gamepad2", gamepad2);
         super.run();
         dashboardTelemetry.update();
+        KoalaLog.log("Loop/RunMs", (System.nanoTime() - loopStart) / 1e6, true);
     }
 
     @Override
     public void end() {
         super.end();
         KoalaLog.log("DS:enabled", false, false);
+    }
+
+    private void logGamepad(String prefix, Gamepad gamepad) {
+        KoalaLog.log(prefix + "/LeftStickX", gamepad.left_stick_x, true);
+        KoalaLog.log(prefix + "/LeftStickY", gamepad.left_stick_y, true);
+        KoalaLog.log(prefix + "/RightStickX", gamepad.right_stick_x, true);
+        KoalaLog.log(prefix + "/RightStickY", gamepad.right_stick_y, true);
+        KoalaLog.log(prefix + "/LeftTrigger", gamepad.left_trigger, true);
+        KoalaLog.log(prefix + "/RightTrigger", gamepad.right_trigger, true);
+        KoalaLog.log(prefix + "/A", gamepad.a, true);
+        KoalaLog.log(prefix + "/B", gamepad.b, true);
+        KoalaLog.log(prefix + "/X", gamepad.x, true);
+        KoalaLog.log(prefix + "/Y", gamepad.y, true);
+        KoalaLog.log(prefix + "/DpadUp", gamepad.dpad_up, true);
+        KoalaLog.log(prefix + "/DpadDown", gamepad.dpad_down, true);
+        KoalaLog.log(prefix + "/DpadLeft", gamepad.dpad_left, true);
+        KoalaLog.log(prefix + "/DpadRight", gamepad.dpad_right, true);
+        KoalaLog.log(prefix + "/LeftBumper", gamepad.left_bumper, true);
+        KoalaLog.log(prefix + "/RightBumper", gamepad.right_bumper, true);
+        KoalaLog.log(prefix + "/LeftStickButton", gamepad.left_stick_button, true);
+        KoalaLog.log(prefix + "/RightStickButton", gamepad.right_stick_button, true);
+        KoalaLog.log(prefix + "/Back", gamepad.back, true);
+        KoalaLog.log(prefix + "/Start", gamepad.start, true);
+        KoalaLog.log(prefix + "/Guide", gamepad.guide, true);
     }
 
     private void setupBulkReading() {

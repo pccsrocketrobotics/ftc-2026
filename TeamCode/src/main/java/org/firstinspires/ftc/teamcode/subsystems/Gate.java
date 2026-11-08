@@ -16,6 +16,8 @@ public class Gate extends SubsystemBase {
     private Servo gateR;
     private AnalogInput gateLpos;
     private AnalogInput gateRpos;
+    private double gateLTarget = 0;
+    private double gateRTarget = 0;
 
     public static double GATEL_OPENED = 0.5;
     public static double GATEL_CLOSED = 0.9;
@@ -30,14 +32,16 @@ public class Gate extends SubsystemBase {
     }
 
     public void gate(double position1, double position2) {
+        gateLTarget = position1;
+        gateRTarget = position2;
         gateL.setPosition(position1);
         gateR.setPosition(position2);
     }
 
     @Override
     public void periodic() {
-        KoalaLog.log("GateL/Target", gateL.getPosition(), true);
-        KoalaLog.log("GateR/Target", gateR.getPosition(), true);
+        KoalaLog.log("GateL/Target", gateLTarget, true);
+        KoalaLog.log("GateR/Target", gateRTarget, true);
         KoalaLog.log("GateL/Position", gateLpos.getVoltage(), true);
         KoalaLog.log("GateR/Position", gateRpos.getVoltage(), true);
 

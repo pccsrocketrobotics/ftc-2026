@@ -15,6 +15,7 @@ public class FlowerCollector extends SubsystemBase {
     private Servo wristR;
     public static double WRIST_DOWN = 0;
     public static double WRIST_UP = 1;
+    private double wristPosition = 0;
 
     public FlowerCollector(HardwareMap hardwareMap) {
         wristL = hardwareMap.get(Servo.class, "wristL");
@@ -22,14 +23,14 @@ public class FlowerCollector extends SubsystemBase {
     }
 
     public void wrist(double position) {
+        wristPosition = position;
         wristL.setPosition(position);
         wristR.setPosition(position);
     }
 
     @Override
     public void periodic() {
-        KoalaLog.log("WristL/Power", wristL.getPosition(), true);
-        KoalaLog.log("WristR/Power", wristR.getPosition(), true);
+        KoalaLog.log("Wrist/Position", wristPosition, true);
     }
     public Command wristDownCommand() {
         return startRun(
