@@ -10,6 +10,7 @@ import com.pedropathing.math.Pose;
 import com.pedropathing.paths.Path;
 import com.pedropathing.revhub.drivetrains.Mecanum;
 import com.pedropathing.revhub.localizers.PinpointLocalizer;
+import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
@@ -22,7 +23,9 @@ import com.seattlesolvers.solverslib.geometry.Pose2d;
 import com.seattlesolvers.solverslib.geometry.Pose2dExtKt;
 import com.seattlesolvers.solverslib.pedroCommand.FollowPathCommand;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
+import org.firstinspires.ftc.robotcore.external.navigation.UnnormalizedAngleUnit;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 
 import java.lang.annotation.Target;
@@ -39,6 +42,7 @@ public class Drive extends SubsystemBase {
     // Same motor objects the Mecanum drivetrain uses (its own array is private), for logging only
     private static final String[] WHEEL_NAMES = {"LF", "RF", "LR", "RR"};
     private final DcMotorEx[] wheels = new DcMotorEx[4];
+    private final GoBildaPinpointDriver pinpoint;
     public Drive(HardwareMap hardwareMap, HashMap<String, Object> blackboard, Vision vision) {
         follower = (Follower) blackboard.get("follower");
         if (follower == null) {
@@ -54,6 +58,22 @@ public class Drive extends SubsystemBase {
         wheels[1] = hardwareMap.get(DcMotorEx.class, mecanum.config.frontRightName.get());
         wheels[2] = hardwareMap.get(DcMotorEx.class, mecanum.config.backLeftName.get());
         wheels[3] = hardwareMap.get(DcMotorEx.class, mecanum.config.backRightName.get());
+
+        pinpoint = hardwareMap.get(GoBildaPinpointDriver.class, Constants.localizerConfig.name.get());
+        pinpoint.setBulkReadScope(
+            GoBildaPinpointDriver.Register.DEVICE_STATUS,
+            GoBildaPinpointDriver.Register.LOOP_TIME,
+            GoBildaPinpointDriver.Register.X_ENCODER_VALUE,
+            GoBildaPinpointDriver.Register.Y_ENCODER_VALUE,
+            GoBildaPinpointDriver.Register.X_POSITION,
+            GoBildaPinpointDriver.Register.Y_POSITION,
+            GoBildaPinpointDriver.Register.H_ORIENTATION,
+            GoBildaPinpointDriver.Register.X_VELOCITY,
+            GoBildaPinpointDriver.Register.Y_VELOCITY,
+            GoBildaPinpointDriver.Register.H_VELOCITY,
+            GoBildaPinpointDriver.Register.PITCH,
+            GoBildaPinpointDriver.Register.ROLL
+        );
     }
 
     public Follower getFollower() {
@@ -76,6 +96,19 @@ public class Drive extends SubsystemBase {
             KoalaLog.log("Drive/" + name + "Power", mecanum.wheelPowers[i], true);
             KoalaLog.log("Drive/" + name + "Speed", wheels[i].getVelocity(), true);
         }
+        logPinpoint();
+    }
+
+    private void logPinpoint() {
+        KoalaLog.log("Pinpoint/Status", pinpoint.getDeviceStatus(), true);
+        KoalaLog.log("Pinpoint/EncoderX", pinpoint.getEncoderX(), true);
+        KoalaLog.log("Pinpoint/EncoderY", pinpoint.getEncoderY(), true);
+        KoalaLog.log("Pinpoint/HeadingVelocity", pinpoint.getHeadingVelocity(UnnormalizedAngleUnit.DEGREES), true);
+        KoalaLog.log("Pinpoint/LoopTime", pinpoint.getLoopTime(), true);
+        KoalaLog.log("Pinpoint/Frequency", pinpoint.getFrequency(), true);
+        KoalaLog.log("Pinpoint/Heading", pinpoint.getHeading(AngleUnit.DEGREES), true);
+        KoalaLog.log("Pinpoint/Pitch", pinpoint.getPitch(AngleUnit.DEGREES), true);
+        KoalaLog.log("Pinpoint/Roll", pinpoint.getRoll(AngleUnit.DEGREES), true);
     }
 
 
@@ -139,6 +172,7 @@ public class Drive extends SubsystemBase {
     }
 
     public void resetFieldCentric() {
+        KoalaLog.log("Drive/HeadingBeforeReset", Math.toDegrees(follower.pose().heading()), true);
         follower.setPose(new Pose(follower.pose().x(), follower.pose().y(), 0));
     }
 
