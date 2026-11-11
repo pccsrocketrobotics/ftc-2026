@@ -13,14 +13,13 @@ import com.seattlesolvers.solverslib.command.Command;
 import com.seattlesolvers.solverslib.command.ParallelDeadlineGroup;
 import com.seattlesolvers.solverslib.command.SequentialCommandGroup;
 import com.seattlesolvers.solverslib.command.WaitCommand;
-import org.firstinspires.ftc.teamcode.pedro.Constants;
 
 import org.firstinspires.ftc.teamcode.subsystems.Shooter;
 
 import Ori.Coval.Logging.Logger.KoalaLog;
 
 @Autonomous(preselectTeleOp = "DriverControl")
-public class HiveShootGarden extends CommonOpMode{
+public class RIghtShootGarden extends CommonOpMode{
 
     private Command auton;
 

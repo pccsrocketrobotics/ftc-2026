@@ -13,7 +13,7 @@ import com.seattlesolvers.solverslib.command.SequentialCommandGroup;
 import Ori.Coval.Logging.Logger.KoalaLog;
 
 @Autonomous(preselectTeleOp = "DriverControl")
-public class Park extends CommonOpMode{
+public class LeftPark extends CommonOpMode{
 
     private Command auton;
 

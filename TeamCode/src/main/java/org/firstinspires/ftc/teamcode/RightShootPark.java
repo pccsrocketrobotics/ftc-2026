@@ -17,7 +17,7 @@ import org.firstinspires.ftc.teamcode.subsystems.Shooter;
 import Ori.Coval.Logging.Logger.KoalaLog;
 
 @Autonomous(preselectTeleOp = "DriverControl")
-public class HiveShootPark extends CommonOpMode{
+public class RightShootPark extends CommonOpMode{
 
     private Command auton;
 
@@ -44,7 +44,7 @@ public class HiveShootPark extends CommonOpMode{
                     drive.follow(shoot),
                     gate.gateOpenCommand(),
                     new WaitCommand(1500),
-                    transfer.inCommand().withTimeout(7000 ),
+                    transfer.inCommand().withTimeout(3000 ),
                     gate.gateCloseCommand()
                 ),
                 shooter.shootCommand(() -> Shooter.SPEED2)
