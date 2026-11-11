@@ -4,14 +4,12 @@ import static com.pedropathing.api.Paths.*;
 
 import com.pedropathing.algorithm.Foresight;
 import com.pedropathing.algorithm.ForesightConfig;
-import com.pedropathing.controllers.PIDController;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.math.Pose;
 import com.pedropathing.paths.Path;
 import com.pedropathing.revhub.drivetrains.Mecanum;
 import com.pedropathing.revhub.localizers.PinpointLocalizer;
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
-import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -19,16 +17,13 @@ import com.seattlesolvers.solverslib.command.Command;
 import com.seattlesolvers.solverslib.command.SubsystemBase;
 import com.pedropathing.drivetrain.DrivePowers;
 import com.pedropathing.follower.ManualDrive;
-import com.seattlesolvers.solverslib.geometry.Pose2d;
-import com.seattlesolvers.solverslib.geometry.Pose2dExtKt;
 import com.seattlesolvers.solverslib.pedroCommand.FollowPathCommand;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.robotcore.external.navigation.UnnormalizedAngleUnit;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 
-import java.lang.annotation.Target;
+import java.lang.reflect.Field;
 import java.util.HashMap;
 
 import Ori.Coval.Logging.Logger.KoalaLog;
@@ -36,7 +31,7 @@ import Ori.Coval.Logging.Logger.KoalaLog;
 public class Drive extends SubsystemBase {
 
     private Follower follower;
-    private Vision vision;
+    private final Vision vision;
     private boolean headingLock = false;
     private double targetHeading = 0;
     // Same motor objects the Mecanum drivetrain uses (its own array is private), for logging only
@@ -59,7 +54,7 @@ public class Drive extends SubsystemBase {
         wheels[2] = hardwareMap.get(DcMotorEx.class, mecanum.config.backLeftName.get());
         wheels[3] = hardwareMap.get(DcMotorEx.class, mecanum.config.backRightName.get());
 
-        pinpoint = hardwareMap.get(GoBildaPinpointDriver.class, Constants.localizerConfig.name.get());
+        pinpoint = pinpointDriver(follower);
         pinpoint.setBulkReadScope(
             GoBildaPinpointDriver.Register.DEVICE_STATUS,
             GoBildaPinpointDriver.Register.LOOP_TIME,
@@ -74,6 +69,16 @@ public class Drive extends SubsystemBase {
             GoBildaPinpointDriver.Register.PITCH,
             GoBildaPinpointDriver.Register.ROLL
         );
+    }
+
+    private static GoBildaPinpointDriver pinpointDriver(Follower follower) {
+        try {
+            Field field = PinpointLocalizer.class.getDeclaredField("pinpoint");
+            field.setAccessible(true);
+            return (GoBildaPinpointDriver) field.get(follower.localizer);
+        } catch (ReflectiveOperationException e) {
+            throw new RuntimeException("Cannot access the Pinpoint driver inside PinpointLocalizer", e);
+        }
     }
 
     public Follower getFollower() {
@@ -165,9 +170,7 @@ public class Drive extends SubsystemBase {
                     Path path = line(follower.pose(), target).linear(follower.pose(), target);
                     follower.follow(path);
                 },
-                () -> {
-                    follower.stop();
-                }
+                () -> follower.stop()
         );
     }
 

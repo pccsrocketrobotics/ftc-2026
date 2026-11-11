@@ -1,31 +1,12 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.acmerobotics.dashboard.FtcDashboard;
-import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.pedropathing.api.PoseFactory;
-import com.pedropathing.follower.Follower;
-import com.pedropathing.revhub.localizers.PinpointLocalizer;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.seattlesolvers.solverslib.command.CommandOpMode;
 import com.seattlesolvers.solverslib.command.InstantCommand;
-import com.seattlesolvers.solverslib.command.StartEndCommand;
 import com.seattlesolvers.solverslib.command.button.Trigger;
 import com.seattlesolvers.solverslib.gamepad.GamepadEx;
 import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
-import com.pedropathing.drivetrain.DrivePowers;
-import com.pedropathing.follower.ManualDrive;
-
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.pedro.Constants;
-import org.firstinspires.ftc.teamcode.subsystems.Drive;
-import org.firstinspires.ftc.teamcode.subsystems.FlowerCollector;
-import org.firstinspires.ftc.teamcode.subsystems.Gate;
-import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.subsystems.Shooter;
-import org.firstinspires.ftc.teamcode.subsystems.FlowerCollector;
-import org.firstinspires.ftc.teamcode.subsystems.Transfer;
-
-import java.util.function.BooleanSupplier;
 
 import Ori.Coval.Logging.Logger.KoalaLog;
 
@@ -53,9 +34,14 @@ public class DriverControl extends CommonOpMode {
         driver.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(flowerCollector.wristDownCommand());
         driver.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(flowerCollector.wristUpCommand());
 
-        driver.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenHeld(drive.assist(p.of(58,26.3,-96)));
-        driver.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenHeld(drive.assist(p.of(58,115,96)));
-        driver.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenHeld(drive.assist(p.of(12.5,117,90)));
+        // corner left
+        new Trigger(() -> gamepad1.dpad_down && gamepad1.dpad_left).whileActiveOnce(drive.assist(p.of(45.4,115,120)));
+        // corner right
+        new Trigger(() -> gamepad1.dpad_down && gamepad1.dpad_right).whileActiveOnce(drive.assist(p.of(45.5,26,-120)));
+        // middle left
+        new Trigger(() -> gamepad1.dpad_left && !gamepad1.dpad_down).whileActiveOnce(drive.assist(p.of(58,115,96)));
+        // middle right
+        new Trigger(() -> gamepad1.dpad_right && !gamepad1.dpad_down).whileActiveOnce(drive.assist(p.of(58,26,-94)));
 
         driver.getGamepadButton(GamepadKeys.Button.PS).whenPressed(new InstantCommand(() -> drive.resetFieldCentric()));
 
