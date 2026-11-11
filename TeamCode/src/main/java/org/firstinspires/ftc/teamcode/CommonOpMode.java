@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.acmerobotics.dashboard.FtcDashboard;
+import com.pedropathing.follower.Follower;
+import com.pedropathing.math.Pose;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.seattlesolvers.solverslib.command.CommandOpMode;
@@ -22,6 +24,8 @@ import java.util.List;
 import Ori.Coval.Logging.Logger.KoalaLog;
 
 public class CommonOpMode extends CommandOpMode {
+    protected static final String HEADING_CALIBRATED = "headingCalibrated";
+
     public Telemetry dashboardTelemetry = FtcDashboard.getInstance().getTelemetry();
 
     protected Drive drive;
@@ -118,6 +122,15 @@ public class CommonOpMode extends CommandOpMode {
         KoalaLog.log(prefix + "/Back", gamepad.back, true);
         KoalaLog.log(prefix + "/Start", gamepad.start, true);
         KoalaLog.log(prefix + "/Guide", gamepad.guide, true);
+    }
+
+    protected void setStartPose(Pose startPose) {
+        Follower follower = drive.getFollower();
+        follower.update();
+        boolean calibrated = blackboard.remove(HEADING_CALIBRATED) != null;
+        double heading = calibrated ? follower.pose().heading() : startPose.heading();
+        follower.setPose(new Pose(startPose.x(), startPose.y(), heading));
+        KoalaLog.log("Drive/HeadingCalibrated", calibrated, true);
     }
 
     private void setupBulkReading() {

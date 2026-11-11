@@ -5,7 +5,6 @@ import static com.pedropathing.api.Paths.line;
 
 import com.pedropathing.algorithm.ForesightConfig;
 import com.pedropathing.api.PoseFactory;
-import com.pedropathing.follower.Follower;
 import com.pedropathing.math.Pose;
 import com.pedropathing.paths.Path;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -36,8 +35,7 @@ public class RIghtShootGarden extends CommonOpMode{
         Pose parkPose = p.of(12.6,96.6,-90);
         Pose parkControlPose = p.of(25.7,39.7,-90);
 
-        Follower follower = drive.getFollower();
-        follower.setPose(startPose);
+        setStartPose(startPose);
 
         ForesightConfig c = drive.foresightConfig();
         Path shoot = line(startPose, shootPose).linear(startPose, shootPose);

@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode;
 import static com.pedropathing.api.Paths.*;
 
 import com.pedropathing.api.PoseFactory;
-import com.pedropathing.follower.Follower;
 import com.pedropathing.math.Pose;
 import com.pedropathing.paths.Path;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -34,8 +33,7 @@ public class LeftWaitShoot extends CommonOpMode{
         Pose shootPose = p.of(45.4,114.5,120);
         Pose parkPose = p.of(14.8,119.8,90);
 
-        Follower follower = drive.getFollower();
-        follower.setPose(startPose);
+        setStartPose(startPose);
 
         Path shoot = line(startPose, shootPose).linear(startPose, shootPose);
         Path park = line(shootPose, parkPose).linear(shootPose, parkPose);
