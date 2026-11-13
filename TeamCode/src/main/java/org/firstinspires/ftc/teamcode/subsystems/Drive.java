@@ -138,6 +138,12 @@ public class Drive extends SubsystemBase {
                         targetHeading = follower.pose().heading() + Math.toRadians(vision.getBearing());
                         headingLock = true;
                     }
+                } else if (gamepad.b) {
+                    if (!headingLock) {
+                        double quarter = Math.toRadians(90);
+                        targetHeading = Math.round(follower.pose().heading()/quarter)*quarter;
+                        headingLock = true;
+                    }
                 } else {
                     headingLock = false;
                 }
