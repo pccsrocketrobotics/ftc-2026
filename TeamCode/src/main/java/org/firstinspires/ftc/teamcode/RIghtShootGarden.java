@@ -33,7 +33,7 @@ public class RIghtShootGarden extends CommonOpMode{
         Pose gardenControlPose = p.of(30 ,5 , 200);
         Pose gardenPose = p.of(12 ,5 ,188);
         Pose parkPose = p.of(12.6,96.6,-90);
-        Pose parkControlPose = p.of(25.7,39.7,-90);
+        Pose parkControlPose = p.of(25.7,33.7,-90);
 
         setStartPose(startPose);
 
