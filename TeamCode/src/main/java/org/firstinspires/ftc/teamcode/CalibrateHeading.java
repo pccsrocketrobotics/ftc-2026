@@ -8,6 +8,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
+import Ori.Coval.Logging.Logger.KoalaLog;
+
 @Autonomous(group = "Setup")
 public class CalibrateHeading extends CommonOpMode {
     private static final int BOTPOSE_PIPELINE = 0;
@@ -46,5 +48,11 @@ public class CalibrateHeading extends CommonOpMode {
         telemetry.addData("Robot heading", "%.2f°", Math.toDegrees(f.pose().heading()));
         telemetry.addData("Camera heading", valid ? String.format("%.2f°", Math.toDegrees(yaw)) : "no tags");
         telemetry.update();
+    }
+
+    @Override
+    public void end() {
+        super.end();
+        KoalaLog.stop();
     }
 }
