@@ -45,13 +45,19 @@ public class RIghtShootGarden extends CommonOpMode{
             Path shoot2 = line(gardenPose, shootPose).linear(gardenPose, shootPose);
             Path park = curve(shootPose, parkControlPose, parkPose).linear(shootPose,parkPose);
 
+        Command finishTip = new SequentialCommandGroup(
+            gate.gateOpenCommand(),
+            new WaitCommand(3000),
+            gate.gateCloseCommand()
+        );
+
         auton = new SequentialCommandGroup(
             new ParallelDeadlineGroup(
                 new SequentialCommandGroup(
                     drive.follow(shoot),
                     gate.gateOpenCommand(),
                     new WaitCommand(1500),
-                    transfer.inCommand().withTimeout(3000 ),
+                    transfer.inCommand().withTimeout(3000),
                     gate.gateCloseCommand(),
                     new ParallelDeadlineGroup(
                         new SequentialCommandGroup(
@@ -60,9 +66,8 @@ public class RIghtShootGarden extends CommonOpMode{
                                 drive.follow(garden)
                             ),
                             drive.follow(shoot2),
-                            gate.gateOpenCommand(),
-                            new WaitCommand(3000),
-                            gate.gateCloseCommand()
+                            // detect hive
+                            finishTip
                         ),
                         transfer.inCommand(),
                         intake.inCommand()
