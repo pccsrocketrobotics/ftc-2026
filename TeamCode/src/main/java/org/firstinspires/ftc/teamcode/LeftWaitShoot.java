@@ -7,6 +7,7 @@ import com.pedropathing.math.Pose;
 import com.pedropathing.paths.Path;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.seattlesolvers.solverslib.command.Command;
+import com.seattlesolvers.solverslib.command.ParallelCommandGroup;
 import com.seattlesolvers.solverslib.command.ParallelDeadlineGroup;
 import com.seattlesolvers.solverslib.command.SelectCommand;
 import com.seattlesolvers.solverslib.command.SequentialCommandGroup;
@@ -20,7 +21,7 @@ import Ori.Coval.Logging.Logger.KoalaLog;
 public class LeftWaitShoot extends CommonOpMode{
 
     private Command auton;
-    private int startDelay = 10;
+    private long startDelay = 10;
 
     @Override
     public void initialize() {
@@ -28,24 +29,25 @@ public class LeftWaitShoot extends CommonOpMode{
 
         PoseFactory p = PoseFactory.degrees();
 
-        Pose startPose = p.of(57,130.7,90);
-        Pose shootPose = p.of(55.2,25.3,-96);
-        Pose parkPose = p.of(12.5,117,90);
+        Pose startPose = p.of(31.8,130.7,90);
+        Pose shootPose = p.of(45.4,114.5,120);
+        Pose parkPose = p.of(14.8,119.8,90);
 
         setStartPose(startPose);
 
         Path shoot = line(startPose, shootPose).linear(startPose, shootPose);
-        Path park = curve(shootPose, parkPose).linear(shootPose,parkPose);
+        Path park = line(shootPose, parkPose).linear(shootPose, parkPose);
 
         auton = new SequentialCommandGroup(
                 new ParallelDeadlineGroup(
                         new SequentialCommandGroup(
+                            new ParallelCommandGroup(
                                 drive.follow(shoot),
-                                new SelectCommand(() -> new WaitCommand(startDelay * 1000)),
-                                gate.gateOpenCommand(),
-                                new WaitCommand(1500),
-                                transfer.inCommand().withTimeout(3000),
-                                gate.gateCloseCommand()
+                                new SelectCommand(() -> new WaitCommand(startDelay * 1000))
+                            ),
+                            gate.gateOpenCommand(),
+                            transfer.inCommand().withTimeout(3000),
+                            gate.gateCloseCommand()
                         ),
                         shooter.shootCommand(() -> Shooter.SPEED2)
                 ),
