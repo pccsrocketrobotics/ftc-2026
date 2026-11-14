@@ -5,6 +5,9 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.seattlesolvers.solverslib.command.Command;
 import com.seattlesolvers.solverslib.command.SubsystemBase;
 
+import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
+import org.firstinspires.ftc.teamcode.pedro.Constants;
+
 import Ori.Coval.Logging.Logger.KoalaLog;
 
 public class Transfer extends SubsystemBase {
@@ -22,6 +25,9 @@ public class Transfer extends SubsystemBase {
     public void periodic() {
         KoalaLog.log("Transfer/Power", transferPower, true);
         KoalaLog.log("Transfer/Speed", transfer.getVelocity(), true);
+        if (Constants.LOG_CURRENTS) {
+            KoalaLog.log("Transfer/Current", transfer.getCurrent(CurrentUnit.AMPS), true);
+        }
     }
 
     public Command inCommand() {

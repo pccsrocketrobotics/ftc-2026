@@ -20,6 +20,7 @@ import com.pedropathing.follower.ManualDrive;
 import com.seattlesolvers.solverslib.pedroCommand.FollowPathCommand;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.UnnormalizedAngleUnit;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 
@@ -100,6 +101,9 @@ public class Drive extends SubsystemBase {
             String name = WHEEL_NAMES[i];
             KoalaLog.log("Drive/" + name + "Power", mecanum.wheelPowers[i], true);
             KoalaLog.log("Drive/" + name + "Speed", wheels[i].getVelocity(), true);
+            if (Constants.LOG_CURRENTS) {
+                KoalaLog.log("Drive/" + name + "Current", wheels[i].getCurrent(CurrentUnit.AMPS), true);
+            }
         }
         logPinpoint();
     }

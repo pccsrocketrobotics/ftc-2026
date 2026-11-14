@@ -28,6 +28,7 @@ public class Constants {
         RED
     }
     public static String PRACTICE_BOT_SERIAL = "a991cf9f16920959";
+    public static boolean LOG_CURRENTS = false;
 
     public static MecanumConfig drivetrainConfig = new MecanumConfig
         (c -> {
