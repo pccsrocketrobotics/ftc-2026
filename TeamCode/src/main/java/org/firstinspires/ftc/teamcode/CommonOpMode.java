@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.seattlesolvers.solverslib.command.CommandOpMode;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 import org.firstinspires.ftc.teamcode.subsystems.CheeseS;
 import org.firstinspires.ftc.teamcode.subsystems.Drive;
@@ -125,6 +126,21 @@ public class CommonOpMode extends CommandOpMode {
         double heading = calibrated ? follower.pose().heading() : startPose.heading();
         follower.setPose(new Pose(startPose.x(), startPose.y(), heading));
         KoalaLog.log("Drive/HeadingCalibrated", calibrated, true);
+
+        double maxStartHeadingErrorDeg = 15;
+        double error = Math.abs(AngleUnit.normalizeRadians(heading - startPose.heading()));
+        String status;
+        if (!calibrated) {
+            status = "NO HEADING CALIBRATION";
+        } else if (error <= Math.toRadians(maxStartHeadingErrorDeg)) {
+            status = "Calibration good";
+        } else {
+            status = "REDO HEADING CALIBRATION";
+        }
+        telemetry.addLine(status);
+        telemetry.addData("Start heading", "%.1f°", Math.toDegrees(startPose.heading()));
+        telemetry.addData("Current heading", "%.1f°", Math.toDegrees(heading));
+        telemetry.update();
     }
 
     private void setupBulkReading() {

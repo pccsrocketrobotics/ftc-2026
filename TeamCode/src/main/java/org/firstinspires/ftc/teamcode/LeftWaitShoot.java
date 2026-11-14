@@ -29,7 +29,7 @@ public class LeftWaitShoot extends CommonOpMode{
         PoseFactory p = PoseFactory.degrees();
 
         Pose startPose = p.of(57,130.7,90);
-        Pose shootPose = p.of(55.2,25.3,-96);//TUNE!!
+        Pose shootPose = p.of(55.2,25.3,-96);
         Pose parkPose = p.of(12.5,117,90);
 
         setStartPose(startPose);
@@ -56,14 +56,17 @@ public class LeftWaitShoot extends CommonOpMode{
     @Override
     public void initialize_loop() {
         super.initialize_loop();
-        telemetry.addData("Delay at start of auton", startDelay);
         if (gamepad1.dpadUpWasPressed()) {
             startDelay++;
+            telemetry.addData("Delay before shooting", startDelay);
+            telemetry.update();
         } else if (gamepad1.dpadDownWasPressed()) {
             startDelay--;
             if (startDelay < 0) {
                 startDelay = 0;
             }
+            telemetry.addData("Delay before shooting", startDelay);
+            telemetry.update();
         }
     }
 
