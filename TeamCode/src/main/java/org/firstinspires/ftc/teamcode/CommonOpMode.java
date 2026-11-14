@@ -52,7 +52,7 @@ public class CommonOpMode extends CommandOpMode {
         vision = new Vision(hardwareMap);
         drive = new Drive(hardwareMap, blackboard, vision);
         intake = new Intake(hardwareMap);
-        shooter = new Shooter(hardwareMap);
+        shooter = new Shooter(hardwareMap, vision);
         flowerCollector = new FlowerCollector(hardwareMap);
         transfer = new Transfer(hardwareMap);
         gate = new Gate(hardwareMap);

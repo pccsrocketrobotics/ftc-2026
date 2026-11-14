@@ -56,6 +56,8 @@ public class DriverControl extends CommonOpMode {
         operater.getGamepadButton(GamepadKeys.Button.X).whenPressed(shooter.shootCommand(() -> Shooter.SPEED1));
         operater.getGamepadButton(GamepadKeys.Button.A).whenPressed(shooter.shootCommand(() -> Shooter.SPEED2));
         operater.getGamepadButton(GamepadKeys.Button.B).whenPressed(shooter.shootCommand(() -> Shooter.SPEED3));
+        operater.getGamepadButton(GamepadKeys.Button.BACK).whenPressed(shooter.smartShoot());
+
 
         operater.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenHeld(gate.gateOpenCommand()).whenReleased(gate.gateCloseCommand());
     }
@@ -76,7 +78,7 @@ public class DriverControl extends CommonOpMode {
         if(autoStart) {
             schedule(cheeseS.inSideCommand());
             schedule(gate.gateCloseCommand());
-            schedule(shooter.shootCommand(()-> Shooter.SPEED2));
+            schedule(shooter.smartShoot());
             schedule(intake.inCommand());
             schedule(transfer.inCommand());
         }
