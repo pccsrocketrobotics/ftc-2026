@@ -55,5 +55,22 @@ public class Intake extends SubsystemBase {
                 () -> {}
             );
         }
+    public Command inatantInCommand() {
+        return runOnce(
+            () -> spin(-0.7)
+        );
+    }
+
+    public Command instantOutCommand() {
+        return runOnce(
+            () -> spin(0.7)
+        );
+    }
+
+    public Command instantStopCommand() {
+        return runOnce(
+            () -> spin(0)
+        );
+    }
 
 }

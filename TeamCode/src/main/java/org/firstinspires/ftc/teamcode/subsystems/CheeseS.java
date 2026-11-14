@@ -38,4 +38,9 @@ public class CheeseS extends SubsystemBase {
                 () -> {}
         );
     }
+    public Command instantInSideCommand() {
+        return runOnce(
+            () -> sideIntakeSpin(1)
+        );
+    }
 }

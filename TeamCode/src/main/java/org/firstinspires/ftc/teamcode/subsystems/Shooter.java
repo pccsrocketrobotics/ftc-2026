@@ -25,7 +25,7 @@ public class Shooter extends SubsystemBase {
     private final DcMotorEx shooter;
     public static double SPEED1 = 1100;
     public static double SPEED2 = 1200;
-    public static double SPEED3 = 1300;
+    public static double SPEED3 = 1260;
     public static double P = 400, I = 0, D = 0, F = 13.8;
     public static double RMIN = 27;
     public static double RMAX = 47;
@@ -67,6 +67,17 @@ public class Shooter extends SubsystemBase {
         return startEnd(
                 () -> {},
                 () -> {}
+        );
+    }
+    public Command instantShootCommand(DoubleSupplier speed) {
+        return runOnce(
+            () -> shoot(speed.getAsDouble())
+        );
+    }
+
+    public Command instantStopCommand() {
+        return runOnce(
+            () -> shoot(0)
         );
     }
 

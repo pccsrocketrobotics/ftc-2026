@@ -78,7 +78,7 @@ public class DriverControl extends CommonOpMode {
         if(autoStart) {
             schedule(cheeseS.inSideCommand());
             schedule(gate.gateCloseCommand());
-            schedule(shooter.smartShoot());
+            schedule(shooter.shootCommand(() -> Shooter.SPEED2));
             schedule(intake.inCommand());
             schedule(transfer.inCommand());
         }

@@ -51,4 +51,21 @@ public class Transfer extends SubsystemBase {
                 }
         );
     }
+    public Command instantInCommand() {
+        return runOnce(
+            () -> spin(1)
+        );
+    }
+
+    public Command instantOutCommand() {
+        return runOnce(
+            () -> spin(-1)
+        );
+    }
+
+    public Command instantStopCommand() {
+        return runOnce(
+            () -> spin(0)
+        );
+    }
 }

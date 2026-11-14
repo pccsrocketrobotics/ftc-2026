@@ -3,6 +3,9 @@ package org.firstinspires.ftc.teamcode.subsystems;
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
+import com.seattlesolvers.solverslib.command.Command;
+import com.seattlesolvers.solverslib.command.CommandBase;
 import com.seattlesolvers.solverslib.command.SubsystemBase;
 
 import org.firstinspires.ftc.teamcode.pedro.Constants.Alliance;
@@ -81,7 +84,41 @@ public class Vision extends SubsystemBase {
         KoalaLog.log("Vision/Roll", roll, true);
         KoalaLog.log("Vision/Latency", latency, true);
     }
+    public DetectHive detectHive() {
+        return new DetectHive();
+    }
+    public class DetectHive extends CommandBase{
+        private ElapsedTime timer = new ElapsedTime();
 
+        private int counter;
+
+        @Override
+        public void initialize() {
+            timer.reset();
+            counter = 0;
+        }
+
+        @Override
+        public void execute() {
+            if (hasTags()) {
+                counter++;
+            }
+            KoalaLog.log("Vision/DetectHiveCounter", counter, true);
+        }
+
+        @Override
+        public boolean isFinished() {
+            return timer.milliseconds() > 500;
+        }
+
+        public boolean isHiveUp() {
+            return counter != 0;
+        }
+    }
+
+    public boolean hasTags(){
+        return clusterId != NO_TAG;
+    }
     public int getClusterId() {
         return clusterId;
     }
