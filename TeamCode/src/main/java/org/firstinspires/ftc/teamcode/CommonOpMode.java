@@ -65,12 +65,6 @@ public class CommonOpMode extends CommandOpMode {
     public void initialize_loop() {
         super.initialize_loop();
         clearBulkReading();
-
-        if (gamepad1.x) {
-            vision.setAlliance(Constants.Alliance.BLUE);
-        } else if (gamepad1.b) {
-            vision.setAlliance(Constants.Alliance.RED);
-        }
     }
 
     @Override
