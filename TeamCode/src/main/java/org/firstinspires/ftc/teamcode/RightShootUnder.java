@@ -37,9 +37,9 @@ public class RightShootUnder extends CommonOpMode{
         Pose parkPose = p.of(12.6,96.6,-90);
         Pose parkControlPose = p.of(25.7,33.7,-90);
 
-        Pose otherSidePose = p.of(58,110,90);
+        Pose otherSidePose = p.of(64,110,90);
         Pose otherSidePoseC1 = p.of(65,20,90);
-        Pose otherSidePoseC2 = p.of(62,42,90);
+        Pose otherSidePoseC2 = p.of(64,42,90);
 
         Pose hive2Pose = p.of(46,118.5,110);
         Pose park2Pose = p.of(12 ,97 , 90);

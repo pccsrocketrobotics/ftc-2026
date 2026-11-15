@@ -45,4 +45,15 @@ public class FlowerCollector extends SubsystemBase {
             () -> {}
         );
     }
+    public Command intstantWristDownCommand() {
+        return runOnce(
+            () -> wrist(WRIST_DOWN)
+        );
+    }
+
+    public Command instantWristUpCommand() {
+        return runOnce(
+            () -> wrist(WRIST_UP)
+        );
+    }
 }
