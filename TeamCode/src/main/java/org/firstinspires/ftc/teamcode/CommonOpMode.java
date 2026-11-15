@@ -127,6 +127,20 @@ public class CommonOpMode extends CommandOpMode {
         follower.setPose(new Pose(startPose.x(), startPose.y(), heading));
         KoalaLog.log("Drive/HeadingCalibrated", calibrated, true);
 
+        Boolean blue = (Boolean) blackboard.remove ("blue");
+        String alliance;
+        if (blue != null) {
+            if (blue.booleanValue()) {
+                vision.setAlliance(Constants.Alliance.BLUE);
+                alliance = "BLUE ALLIANCE";
+            }else{
+                vision.setAlliance(Constants.Alliance.RED);
+                alliance = "RED ALLIANCE";
+            }
+        } else {
+            alliance = "NO ALLIANCE";
+        }
+
         double maxStartHeadingErrorDeg = 15;
         double error = Math.abs(AngleUnit.normalizeRadians(heading - startPose.heading()));
         String status;
@@ -138,6 +152,7 @@ public class CommonOpMode extends CommandOpMode {
             status = "REDO HEADING CALIBRATION";
         }
         telemetry.addLine(status);
+        telemetry.addLine(alliance);
         telemetry.addData("Start heading", "%.1f°", Math.toDegrees(startPose.heading()));
         telemetry.addData("Current heading", "%.1f°", Math.toDegrees(heading));
         telemetry.update();
