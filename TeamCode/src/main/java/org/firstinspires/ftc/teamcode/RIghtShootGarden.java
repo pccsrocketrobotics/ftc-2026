@@ -9,11 +9,13 @@ import com.pedropathing.math.Pose;
 import com.pedropathing.paths.Path;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.seattlesolvers.solverslib.command.Command;
+import com.seattlesolvers.solverslib.command.ConditionalCommand;
 import com.seattlesolvers.solverslib.command.ParallelDeadlineGroup;
 import com.seattlesolvers.solverslib.command.SequentialCommandGroup;
 import com.seattlesolvers.solverslib.command.WaitCommand;
 
 import org.firstinspires.ftc.teamcode.subsystems.Shooter;
+import org.firstinspires.ftc.teamcode.subsystems.Vision;
 
 import Ori.Coval.Logging.Logger.KoalaLog;
 
@@ -45,34 +47,22 @@ public class RIghtShootGarden extends CommonOpMode{
             Path shoot2 = line(gardenPose, shootPose).linear(gardenPose, shootPose);
             Path park = curve(shootPose, parkControlPose, parkPose).linear(shootPose,parkPose);
 
+        Vision.DetectHive detect = vision.detectHive();
         auton = new SequentialCommandGroup(
-            new ParallelDeadlineGroup(
-                new SequentialCommandGroup(
-                    drive.follow(shoot),
-                    gate.gateOpenCommand(),
-                    new WaitCommand(1500),
-                    transfer.inCommand().withTimeout(3000 ),
-                    gate.gateCloseCommand(),
-                    new ParallelDeadlineGroup(
-                        new SequentialCommandGroup(
-                            new ParallelDeadlineGroup(
-                                new WaitCommand(5000),
-                                drive.follow(garden)
-                            ),
-                            drive.follow(shoot2),
-                            gate.gateOpenCommand(),
-                            new WaitCommand(3000),
-                            gate.gateCloseCommand()
-                        ),
-                        transfer.inCommand(),
-                        intake.inCommand()
-                    )
-                ),
-                shooter.shootCommand(() -> Shooter.SPEED2 - 20),
-                cheeseS.inSideCommand()
-            ),
-            drive.follow(park)
-        );
+                cheeseS.instantInSideCommand(),
+                shooter.instantShootCommand(() -> Shooter.SPEED2 -20),
+                drive.follow(shoot),
+                gate.gateOpenCommand(),
+                transfer.inCommand().withTimeout(3000 ),
+                gate.gateCloseCommand(),
+                transfer.instantInCommand(),
+                intake.inatantInCommand(),
+                drive.follow(garden).withTimeout(5000),
+                drive.follow(shoot2),
+                new ConditionalCommand(gate.gateOpenCommand().withTimeout(3000), gate.gateCloseCommand(), detect::isHiveUp),
+                gate.gateCloseCommand(),
+                drive.follow(park)
+            );
     }
     @Override
     public void preRun() {

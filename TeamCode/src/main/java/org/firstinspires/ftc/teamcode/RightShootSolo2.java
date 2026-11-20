@@ -101,7 +101,6 @@ public class RightShootSolo2 extends CommonOpMode{
         );
 
         Vision.DetectHive detect = vision.detectHive();
-
         auton = new SequentialCommandGroup(
             cheeseS.instantInSideCommand(),
             shooter.instantShootCommand(() -> Shooter.SPEED2 -20),
